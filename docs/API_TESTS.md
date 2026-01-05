@@ -1,42 +1,31 @@
+# Build pipeline with API test execution
+
 ```mermaid
 flowchart LR
 
-subgraph SVC["Repo: service-cp-crime-hearing-case-event-subscription"]
-  A["Commit / PR / Merge to main"]
-  B["GitHub Action: Build Docker image"]
-  C["Push image to ACR with SHA tag"]
-  D["Trigger downstream API tests"]
-  A --> B --> C --> D
-end
-
-subgraph ACR["Azure Container Registry"]
-  C2["service-cp-crime-hearing-case-event-subscription:sha"]
-end
-
-C --> C2
-
-subgraph TESTS["Repo: api-cp-crime-hearing-case-event-subscription"]
-  E["Pull image from ACR"]
-  F["Start Docker Compose stack"]
-  F1["Service container"]
-  F2["Stub services (WireMock / MockServer)"]
+subgraph PR["Pull Request flow (gates merge)"]
+  A["PR opened or updated"]
+  B["Build Docker image"]
+  C["Push image to ACR tagged with SHA"]
+  D["Trigger API tests workflow in api-cp-crime-hearing-case-event-subscription"]
+  E["Pull SHA image from ACR"]
+  F["Start service container plus stubs"]
   G["Run API tests via HTTP client"]
   H{"Tests pass?"}
+  I["PR check succeeds"]
+  J["PR check fails (merge blocked)"]
 
-  E --> F
-  F --> F1
-  F --> F2
-  F1 --> G
-  G --> H
+  A --> B --> C --> D --> E --> F --> G --> H
+  H -- Yes --> I
+  H -- No --> J
 end
 
-D --> E
-
-subgraph RELEASE["Release Flow"]
-  I["Promote image to Release Candidate"]
-  J["Fail pipeline and publish reports"]
+subgraph MAIN["Main merge flow (promotion only, no re-test)"]
+  K["Merge PR to main or master"]
+  L["Promote SHA image to Release Candidate tag"]
+  K --> L
 end
 
-H -- Yes --> I
-H -- No --> J
+C --> L
+I --> K
 ```
