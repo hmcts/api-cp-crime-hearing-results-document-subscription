@@ -8,6 +8,7 @@ import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
 import uk.gov.hmcts.cp.openapi.model.EventType;
 import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
 import uk.gov.hmcts.cp.openapi.model.PcrEventPayload;
+import uk.gov.hmcts.cp.openapi.model.PcrEventPayloadDefendants;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -97,7 +98,7 @@ class OpenAPISpecTest {
         assertThat(PcrEventPayload.class.getDeclaredField("timestamp").getType())
                 .isEqualTo(Instant.class);
 
-        assertThat(List.class.isAssignableFrom(
+        assertThat(PcrEventPayloadDefendants.class.isAssignableFrom(
                 PcrEventPayload.class.getDeclaredField("defendants").getType()))
                 .as("defendants field should be a List")
                 .isTrue();
