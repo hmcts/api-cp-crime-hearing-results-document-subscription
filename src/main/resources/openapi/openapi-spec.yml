@@ -213,20 +213,18 @@ paths:
             schema:
               $ref: '#/components/schemas/PcrEventPayload'
             example:
+              materialId: '123e4567-e89b-12d3-a456-426614174000'
               eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-              eventType: 'PCR'
+              eventType: 'PRISON_COURT_REGISTER_GENERATED'
               timestamp: '2024-01-15T10:30:00Z'
               defendants:
-                - masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
-                  name: 'John Doe'
-                  dateOfBirth: '1990-05-15'
-                  custodyEstablishmentDetails:
-                    emailAddress: 'prison@example.gov.uk'
-                  cases:
-                    - urn: 'URN12345678'
-                      documents:
-                        - materialId: '4fa85f64-5717-4562-b3fc-2c963f66afa6'
-                          timestamp: '2024-01-15T10:29:55.123Z'
+                masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
+                name: 'John Doe'
+                dateOfBirth: '1990-05-15'
+                custodyEstablishmentDetails:
+                  emailAddress: 'prison@moj.gov.uk'
+                cases:
+                  - urn: 'URN12345678'
 
       responses:
         '202':
@@ -308,16 +306,20 @@ components:
       description: >
         Payload representing a stored PCR document event with defendants and case details.
       required:
+        - materialId
         - eventId
         - eventType
         - timestamp
         - defendants
       properties:
+        materialId:
+          type: string
+          format: uuid
+          description: Unique identifier of the stored PCR document
         eventId:
           type: string
           format: uuid
           description: Unique identifier of the stored PCR document event
-
         eventType:
           type: string
           description: Type of the event, e.g., PRISON_COURT_REGISTER_GENERATED
@@ -329,67 +331,45 @@ components:
           description: Timestamp when the event occurred
 
         defendants:
-          type: array
-          description: List of defendants associated with this event
-          items:
-            type: object
-            required:
-              - masterDefendantId
-              - name
-              - dateOfBirth
-            properties:
-              masterDefendantId:
-                type: string
-                format: uuid
-                description: Unique identifier for the master defendant
+          type: object
+          required:
+            - masterDefendantId
+            - name
+            - dateOfBirth
+          properties:
+            masterDefendantId:
+              type: string
+              format: uuid
+              description: Unique identifier for the master defendant
 
-              name:
-                type: string
-                description: Full name of the defendant
+            name:
+              type: string
+              description: Full name of the defendant
 
-              dateOfBirth:
-                type: string
-                format: date
-                description: Date of birth of the defendant
+            dateOfBirth:
+              type: string
+              format: date
+              description: Date of birth of the defendant
 
-              custodyEstablishmentDetails:
+            custodyEstablishmentDetails:
+              type: object
+              description: Details of the custody establishment
+              properties:
+                emailAddress:
+                  type: string
+                  format: email
+                  description: Email address of the prison
+
+            cases:
+              type: array
+              description: List of cases associated with the defendant
+              items:
                 type: object
-                description: Details of the custody establishment
+                required:
+                  - urn
                 properties:
-                  emailAddress:
+                  urn:
                     type: string
-                    format: email
-                    description: Email address of the prison
+                    description: Case URN associated with the defendant
 
-              cases:
-                type: array
-                description: List of cases associated with the defendant
-                items:
-                  type: object
-                  required:
-                    - urn
-                    - documents
-                  properties:
-                    urn:
-                      type: string
-                      description: Case URN associated with the defendant
-
-                    documents:
-                      type: array
-                      description: List of documents for this case
-                      items:
-                        type: object
-                        required:
-                          - materialId
-                          - timestamp
-                        properties:
-                          materialId:
-                            type: string
-                            format: uuid
-                            description: uuid to access the document
-
-                          timestamp:
-                            type: string
-                            format: date-time
-                            description: Timestamp when the document was generated
 
