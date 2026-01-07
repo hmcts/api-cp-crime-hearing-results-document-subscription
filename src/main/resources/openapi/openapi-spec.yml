@@ -40,7 +40,7 @@ paths:
                 value:
                   notificationEndpoint:
                     webhookUrl: "https://client.example.com/events"
-                  eventTypes: ["PCR", "CUSTODIAL_RESULT"]
+                  eventTypes: ["PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT"]
             schema:
               $ref: '#/components/schemas/ClientSubscriptionRequest'
       responses:
@@ -55,7 +55,7 @@ paths:
                     clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
                     notificationEndpoint:
                       webhookUrl: "https://client.example.com/events"
-                    eventTypes: ["PCR", "CUSTODIAL_RESULT"]
+                    eventTypes: ["PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT"]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: null
               schema:
@@ -101,7 +101,7 @@ paths:
                     clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
                     notificationEndpoint:
                       webhookUrl: "https://client.example.com/events"
-                    eventTypes: ["PCR"]
+                    eventTypes: ["PRISON_COURT_REGISTER_GENERATED"]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: "2025-01-05T17:30:00Z"
               schema:
@@ -249,7 +249,7 @@ components:
     EventType:
       type: string
       enum:
-        - PCR
+        - PRISON_COURT_REGISTER_GENERATED
         - CUSTODIAL_RESULT
 
     NotificationEndpoint:
@@ -306,8 +306,8 @@ components:
       description: >
         Payload representing a stored PCR document event with defendants and case details.
       required:
-        - materialId
         - eventId
+        - materialId
         - eventType
         - timestamp
         - defendants
