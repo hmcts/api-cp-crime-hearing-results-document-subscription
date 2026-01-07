@@ -20,6 +20,7 @@ security:
 
 tags:
   - name: Subscription
+  - name: Notification
 
 paths:
   /client-subscriptions:
@@ -198,21 +199,13 @@ paths:
         '401':
           description: Unauthorized
 
-  /notification/pcr/{materialId}:
+  /notification/pcr:
     post:
       summary: Create a pcr notification.
       description: Creates a pcr notification with material id and event types.
       operationId: createNotificationPCR
       tags:
         - Notification
-      parameters:
-        - name: materialId
-          in: path
-          required: true
-          description: ID of the material for which PCR notification is created
-          schema:
-            type: string
-            format: uuid
       requestBody:
         required: true
         content:
@@ -221,7 +214,7 @@ paths:
               $ref: '#/components/schemas/PcrEventPayload'
             example:
               eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-              eventType: 'PRISON_COURT_REGISTER_GENERATED'
+              eventType: 'PCR'
               timestamp: '2024-01-15T10:30:00Z'
               defendants:
                 - masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
@@ -232,35 +225,14 @@ paths:
                   cases:
                     - urn: 'URN12345678'
                       documents:
-                        - url: 'https://documents.example.com/pcr/abc123'
+                        - materialId: '4fa85f64-5717-4562-b3fc-2c963f66afa6'
                           timestamp: '2024-01-15T10:29:55.123Z'
 
       responses:
-        '201':
-          description: PCR created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PcrEventPayload'
-              example:
-                eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-                eventType: 'PRISON_COURT_REGISTER_GENERATED'
-                timestamp: '2024-01-15T10:30:00Z'
-                defendants:
-                  - masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
-                    name: 'John Doe'
-                    dateOfBirth: '1990-05-15'
-                    custodyEstablishmentDetails:
-                      emailAddress: 'prison@example.gov.uk'
-                    cases:
-                      - urn: 'URN12345678'
-                        documents:
-                          - url: 'https://documents.example.com/pcr/abc123'
-                            timestamp: '2024-01-15T10:29:55.123Z'
-
-
+        '202':
+            description: accepted
         '400':
-          description: Invalid request payload
+          description: bad_request
           content:
             application/json:
               examples:
@@ -268,9 +240,6 @@ paths:
                   value:
                     error: "invalid_request"
                     message: "eventTypes must contain at least one value."
-
-        '401':
-          description: Unauthorized
 components:
   securitySchemes:
     bearerAuth:
@@ -411,13 +380,13 @@ components:
                       items:
                         type: object
                         required:
-                          - url
+                          - materialId
                           - timestamp
                         properties:
-                          url:
+                          materialId:
                             type: string
-                            format: uri
-                            description: Secure URL to access the document
+                            format: uuid
+                            description: uuid to access the document
 
                           timestamp:
                             type: string
