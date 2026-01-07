@@ -213,8 +213,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PcrEventPayload'
             example:
-              materialId: '123e4567-e89b-12d3-a456-426614174000'
               eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+              materialId: '123e4567-e89b-12d3-a456-426614174000'
               eventType: 'PRISON_COURT_REGISTER_GENERATED'
               timestamp: '2024-01-15T10:30:00Z'
               defendants:
@@ -224,7 +224,7 @@ paths:
                 custodyEstablishmentDetails:
                   emailAddress: 'prison@moj.gov.uk'
                 cases:
-                  - urn: 'URN12345678'
+                  - urn: 'CT98KRYCAP'
 
       responses:
         '202':
@@ -312,14 +312,14 @@ components:
         - timestamp
         - defendants
       properties:
-        materialId:
-          type: string
-          format: uuid
-          description: Unique identifier of the stored PCR document
         eventId:
           type: string
           format: uuid
           description: Unique identifier of the stored PCR document event
+        materialId:
+          type: string
+          format: uuid
+          description: Unique identifier of the stored PCR document
         eventType:
           type: string
           description: Type of the event, e.g., PRISON_COURT_REGISTER_GENERATED
