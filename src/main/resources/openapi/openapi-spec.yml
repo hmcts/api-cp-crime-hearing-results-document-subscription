@@ -65,11 +65,11 @@ paths:
           description: Invalid request payload
           content:
             application/json:
-              examples:
-                invalidPayload:
-                  value:
-                    error: "invalid_request"
-                    message: "eventTypes must contain at least one value."
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "invalid_request"
+                message: "eventTypes must contain at least one value."
 
         '401':
           description: Unauthorized
@@ -111,11 +111,11 @@ paths:
           description: Subscription not found
           content:
             application/json:
-              examples:
-                notFound:
-                  value:
-                    error: "not_found"
-                    message: "No subscription exists for ID aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44."
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "not_found"
+                message: "No subscription exists for ID aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44."
 
         '401':
           description: Unauthorized
@@ -233,11 +233,11 @@ paths:
           description: bad_request
           content:
             application/json:
-              examples:
-                invalidPayload:
-                  value:
-                    error: "invalid_request"
-                    message: "eventTypes must contain at least one value."
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "invalid_request"
+                message: "eventTypes must contain at least one value."
 components:
   securitySchemes:
     bearerAuth:
@@ -300,7 +300,16 @@ components:
           type:
             - string
           format: date-time
-
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
     PcrEventPayload:
       type: object
       description: >
