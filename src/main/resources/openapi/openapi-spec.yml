@@ -217,7 +217,7 @@ paths:
               materialId: '123e4567-e89b-12d3-a456-426614174000'
               eventType: 'PRISON_COURT_REGISTER_GENERATED'
               timestamp: '2024-01-15T10:30:00Z'
-              defendants:
+              defendant:
                 masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
                 name: 'John Doe'
                 dateOfBirth: '1990-05-15'
@@ -304,13 +304,13 @@ components:
     PcrEventPayload:
       type: object
       description: >
-        Payload representing a stored PCR document event with defendants and case details.
+        Payload representing a stored PCR document event with defendant and case details.
       required:
         - eventId
         - materialId
         - eventType
         - timestamp
-        - defendants
+        - defendant
       properties:
         eventId:
           type: string
@@ -330,7 +330,7 @@ components:
           format: date-time
           description: Timestamp when the event occurred
 
-        defendants:
+        defendant:
           type: object
           required:
             - masterDefendantId
