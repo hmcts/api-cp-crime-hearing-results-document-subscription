@@ -8,6 +8,7 @@ import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
 import uk.gov.hmcts.cp.openapi.model.EventType;
 import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
 import uk.gov.hmcts.cp.openapi.model.PcrEventPayload;
+import uk.gov.hmcts.cp.openapi.model.PcrEventPayloadDefendant;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -25,7 +26,7 @@ class OpenAPISpecTest {
         assertThat(EventType.class.isEnum()).isTrue();
         assertThat(EventType.class.getEnumConstants())
                 .extracting(Enum::name)
-                .containsExactlyInAnyOrder("PCR", "CUSTODIAL_RESULT");
+                .containsExactlyInAnyOrder("PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT");
     }
 
     @Test
@@ -97,9 +98,9 @@ class OpenAPISpecTest {
         assertThat(PcrEventPayload.class.getDeclaredField("timestamp").getType())
                 .isEqualTo(Instant.class);
 
-        assertThat(List.class.isAssignableFrom(
-                PcrEventPayload.class.getDeclaredField("defendants").getType()))
-                .as("defendants field should be a List")
+        assertThat(PcrEventPayloadDefendant.class.isAssignableFrom(
+                PcrEventPayload.class.getDeclaredField("defendant").getType()))
+                .as("defendant field should be a Object")
                 .isTrue();
     }
 

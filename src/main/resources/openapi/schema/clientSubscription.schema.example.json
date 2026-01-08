@@ -4,7 +4,7 @@
     "webhookUrl": "https://client.example.com/events"
   },
   "eventTypes": [
-    "PCR"
+    "PRISON_COURT_REGISTER_GENERATED"
   ],
   "createdAt": "2025-01-01T10:00:00Z",
   "updatedAt": "2025-01-05T17:30:00Z"
