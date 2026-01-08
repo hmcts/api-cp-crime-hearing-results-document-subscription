@@ -100,7 +100,7 @@ class OpenAPISpecTest {
 
         assertThat(PcrEventPayloadDefendant.class.isAssignableFrom(
                 PcrEventPayload.class.getDeclaredField("defendant").getType()))
-                .as("defendant field should be a List")
+                .as("defendant field should be a Object")
                 .isTrue();
     }
 
