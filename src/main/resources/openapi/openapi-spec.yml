@@ -199,7 +199,7 @@ paths:
         '401':
           description: Unauthorized
 
-  /notification/pcr:
+  /notifications/pcr:
     post:
       summary: Create a pcr notification.
       description: Creates a pcr notification with material id and event types.

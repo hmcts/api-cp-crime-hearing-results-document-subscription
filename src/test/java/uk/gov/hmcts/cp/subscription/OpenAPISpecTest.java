@@ -13,6 +13,7 @@ import uk.gov.hmcts.cp.openapi.model.PcrEventPayloadDefendant;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -88,20 +89,14 @@ class OpenAPISpecTest {
     }
 
     @Test
-    void pcr_event_payload_should_have_all_expected_top_level_fields() throws NoSuchFieldException {
-        assertThat(PcrEventPayload.class.getDeclaredField("eventId").getType())
-                .isEqualTo(UUID.class);
+    void pcr_event_payload_should_have_all_expected_fields() throws NoSuchFieldException {
+        assertThat(PcrEventPayload.class.getDeclaredField("eventId").getType()).isEqualTo(UUID.class);
+        assertThat(PcrEventPayload.class.getDeclaredField("eventType").getType()).isEqualTo(EventType.class);
+        assertThat(PcrEventPayload.class.getDeclaredField("timestamp").getType()).isEqualTo(Instant.class);
 
-        assertThat(PcrEventPayload.class.getDeclaredField("eventType").getType())
-                .isEqualTo(EventType.class);
-
-        assertThat(PcrEventPayload.class.getDeclaredField("timestamp").getType())
-                .isEqualTo(Instant.class);
-
-        assertThat(PcrEventPayloadDefendant.class.isAssignableFrom(
-                PcrEventPayload.class.getDeclaredField("defendant").getType()))
-                .as("defendant field should be a Object")
-                .isTrue();
+        assertThat(PcrEventPayloadDefendant.class.getDeclaredField("masterDefendantId").getType()).isEqualTo(UUID.class);
+        assertThat(PcrEventPayloadDefendant.class.getDeclaredField("name").getType()).isEqualTo(String.class);
+        assertThat(PcrEventPayloadDefendant.class.getDeclaredField("dateOfBirth").getType()).isEqualTo(LocalDate.class);
+        assertThat(PcrEventPayloadDefendant.class.getDeclaredField("cases").getType()).isEqualTo(List.class);
     }
-
 }
