@@ -23,7 +23,7 @@ public class ValidateClientSubscriptionRequestTest {
     void validate_request_should_accept_valid_request() {
         ClientSubscriptionRequest request = ClientSubscriptionRequest.builder()
                 .eventTypes(List.of(EventType.CUSTODIAL_RESULT, EventType.PRISON_COURT_REGISTER_GENERATED))
-                .notificationEndpoint(NotificationEndpoint.builder().webhookUrl("https://good-url").build())
+                .notificationEndpoint(NotificationEndpoint.builder().callbackUrl("https://good-url").build())
                 .build();
         Set<ConstraintViolation<ClientSubscriptionRequest>> errors = validator.validate(request);
         assertThat(errors.size()).isEqualTo(0);
@@ -32,7 +32,7 @@ public class ValidateClientSubscriptionRequestTest {
     @Test
     void validate_request_should_reject_missing_event_types() {
         ClientSubscriptionRequest request = ClientSubscriptionRequest.builder()
-                .notificationEndpoint(NotificationEndpoint.builder().webhookUrl("https://good-url").build())
+                .notificationEndpoint(NotificationEndpoint.builder().callbackUrl("https://good-url").build())
                 .build();
         validate_request_error(request, "size must be between 1 and 2");
     }
@@ -41,7 +41,7 @@ public class ValidateClientSubscriptionRequestTest {
     void validate_request_should_reject_empty_event_types() {
         ClientSubscriptionRequest request = ClientSubscriptionRequest.builder()
                 .eventTypes(List.of())
-                .notificationEndpoint(NotificationEndpoint.builder().webhookUrl("https://good-url").build())
+                .notificationEndpoint(NotificationEndpoint.builder().callbackUrl("https://good-url").build())
                 .build();
         validate_request_error(request, "size must be between 1 and 2");
     }
@@ -50,7 +50,7 @@ public class ValidateClientSubscriptionRequestTest {
     void validate_request_should_reject_too_many_event_types() {
         ClientSubscriptionRequest request = ClientSubscriptionRequest.builder()
                 .eventTypes(List.of(EventType.CUSTODIAL_RESULT, EventType.PRISON_COURT_REGISTER_GENERATED, EventType.PRISON_COURT_REGISTER_GENERATED))
-                .notificationEndpoint(NotificationEndpoint.builder().webhookUrl("https://good-url").build())
+                .notificationEndpoint(NotificationEndpoint.builder().callbackUrl("https://good-url").build())
                 .build();
         validate_request_error(request, "size must be between 1 and 2");
     }
@@ -68,7 +68,7 @@ public class ValidateClientSubscriptionRequestTest {
     void validate_request_should_reject_bad_url() {
         ClientSubscriptionRequest request = ClientSubscriptionRequest.builder()
                 .eventTypes(List.of(EventType.PRISON_COURT_REGISTER_GENERATED))
-                .notificationEndpoint(NotificationEndpoint.builder().webhookUrl("bad-url").build())
+                .notificationEndpoint(NotificationEndpoint.builder().callbackUrl("bad-url").build())
                 .build();
         validate_request_error(request, "must match \"^https://.*$\"");
     }
@@ -77,7 +77,7 @@ public class ValidateClientSubscriptionRequestTest {
     void validate_request_should_reject_none_https_url() {
         ClientSubscriptionRequest request = ClientSubscriptionRequest.builder()
                 .eventTypes(List.of(EventType.PRISON_COURT_REGISTER_GENERATED))
-                .notificationEndpoint(NotificationEndpoint.builder().webhookUrl("http://bad-url").build())
+                .notificationEndpoint(NotificationEndpoint.builder().callbackUrl("http://bad-url").build())
                 .build();
         validate_request_error(request, "must match \"^https://.*$\"");
     }
