@@ -26,26 +26,43 @@ paths:
   /client-subscriptions:
     post:
       summary: Create a new client subscription
-      description: Creates a new client subscription with the specified notification endpoint and event types.
+      description: Creates a new client subscription with the specified callback URL. Events will be sent to the provided callback URL via callback.
       operationId: createClientSubscription
       tags:
         - Subscription
+      parameters:
+        - name: callbackUrl
+          in: query
+          required: true
+          description: The location where event data will be sent. Must be network accessible by the source server.
+          schema:
+            type: string
+            format: uri
+            pattern: '^https://.*$'
+          example: "https://client.example.com/events"
       requestBody:
         required: true
         content:
           application/json:
+            schema:
+              type: object
+              required:
+                - eventTypes
+              properties:
+                eventTypes:
+                  type: array
+                  minItems: 1
+                  maxItems: 2
+                  items:
+                    $ref: '#/components/schemas/EventType'
             examples:
               createSubscription:
                 summary: Example subscription creation request
                 value:
-                  notificationEndpoint:
-                    webhookUrl: "https://client.example.com/events"
                   eventTypes: ["PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT"]
-            schema:
-              $ref: '#/components/schemas/ClientSubscriptionRequest'
       responses:
         '201':
-          description: Subscription created
+          description: Subscription created successfully
           content:
             application/json:
               examples:
@@ -54,7 +71,7 @@ paths:
                   value:
                     clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
                     notificationEndpoint:
-                      webhookUrl: "https://client.example.com/events"
+                      callbackUrl: "https://client.example.com/events"
                     eventTypes: ["PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT"]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: null
@@ -73,6 +90,26 @@ paths:
 
         '401':
           description: Unauthorized
+      callbacks:
+        onEvent:
+          '{$request.query.callbackUrl}':
+            post:
+              description: Event notification sent to the subscribed callback URL
+              requestBody:
+                description: Event payload containing defendant and case information
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/EventNotificationPayload'
+              responses:
+                '202':
+                  description: |
+                    Your server implementation should return this HTTP status code
+                    if the event was received successfully
+                '400':
+                  description: Bad request - the event payload was invalid
+                '500':
+                  description: Internal server error processing the event
 
 
   /client-subscriptions/{clientSubscriptionId}:
@@ -100,7 +137,7 @@ paths:
                   value:
                     clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
                     notificationEndpoint:
-                      webhookUrl: "https://client.example.com/events"
+                      callbackUrl: "https://client.example.com/events"
                     eventTypes: ["PRISON_COURT_REGISTER_GENERATED"]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: "2025-01-05T17:30:00Z"
@@ -144,7 +181,7 @@ paths:
                 summary: Example update request
                 value:
                   notificationEndpoint:
-                    webhookUrl: "https://client.example.com/new-hook"
+                    callbackUrl: "https://client.example.com/new-hook"
                   eventTypes: ["CUSTODIAL_RESULT"]
             schema:
               $ref: '#/components/schemas/ClientSubscriptionRequest'
@@ -158,7 +195,7 @@ paths:
                   value:
                     clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
                     notificationEndpoint:
-                      webhookUrl: "https://client.example.com/new-hook"
+                      callbackUrl: "https://client.example.com/new-hook"
                     eventTypes: ["CUSTODIAL_RESULT"]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: "2025-01-10T09:15:00Z"
@@ -255,9 +292,9 @@ components:
     NotificationEndpoint:
       type: object
       required:
-        - webhookUrl
+        - callbackUrl
       properties:
-        webhookUrl:
+        callbackUrl:
           type: string
           pattern: '^https://.*$'
 
@@ -382,3 +419,153 @@ components:
                     description: Case URN associated with the defendant
 
 
+    EventNotificationPayload:
+      type: object
+      description: Payload sent to the callback URL when an event occurs
+      required:
+        - eventType
+        - timestamp
+        - defendant
+      properties:
+
+        eventType:
+          type: string
+          description: Type of the event
+          example: "PCR"
+
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the event occurred
+          example: "2024-01-15T10:30:00Z"
+
+        defendant:
+          type: object
+          description: Defendant information associated with the event
+          required:
+            - masterDefendantId
+            - name
+            - dateOfBirth
+            - cases
+          properties:
+            masterDefendantId:
+              type: string
+              format: uuid
+              description: Unique identifier for the master defendant
+              example: "550e8400-e29b-41d4-a716-446655440000"
+
+            name:
+              type: string
+              description: Full name of the defendant
+              example: "John Doe"
+
+            dateOfBirth:
+              type: string
+              format: date
+              description: Date of birth of the defendant
+              example: "1990-05-15"
+
+            custodyEstablishmentDetails:
+              type: object
+              description: Details of the custody establishment
+              properties:
+                emailAddress:
+                  type: string
+                  format: email
+                  description: Email address of the custody establishment
+                  example: "prison@example.com"
+
+            cases:
+              type: array
+              description: List of cases associated with the defendant
+              items:
+                type: object
+                required:
+                  - urn
+                properties:
+                  urn:
+                    type: string
+                    description: Case URN
+                    example: "CASE123456"
+
+
+                  details:
+                    type: string
+                    format: uri
+                    description: URI to retrieve full case details
+                    example: "http://example.com/cases/CASE123456"
+
+                  documents:
+                    type: array
+                    description: List of documents for this case
+                    items:
+                      type: object
+                      required:
+                        - url
+                        - timestamp
+                      properties:
+                        url:
+                          type: string
+                          format: uri
+                          description: Secure URL to access the document
+                          example: "https://subscription-service-host/documents/type/documentId"
+
+                        timestamp:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the document was generated
+                          example: "2024-01-15T10:29:55.123Z"
+
+            applications:
+              type: array
+              description: List of applications associated with the defendant
+              items:
+                type: object
+                required:
+                  - urn
+                properties:
+                  urn:
+                    type: string
+                    description: Application reference
+                    example: "APP123456"
+                  documents:
+                    type: array
+                    description: List of documents for this application
+                    items:
+                      type: object
+                      required:
+                        - url
+                        - timestamp
+                      properties:
+                        url:
+                          type: string
+                          format: uri
+                          description: Secure URL to access the document
+                          example: "https://subscription-service-host/documents/type/documentId"
+
+                        timestamp:
+                          type: string
+                          format: date-time
+                          description: Timestamp when the document was generated
+                          example: "2024-01-15T10:29:55.123Z"
+
+            documents:
+              type: array
+              description: List of documents directly associated with the defendant
+              items:
+                type: object
+                required:
+                  - url
+                  - timestamp
+                properties:
+                  url:
+                    type: string
+                    format: uri
+                    description: Secure URL to access the document
+                    example: "https://subscription-service-host/documents/type/documentId"
+
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the document was generated
+                    example: "2024-01-15T10:29:55.123Z"
