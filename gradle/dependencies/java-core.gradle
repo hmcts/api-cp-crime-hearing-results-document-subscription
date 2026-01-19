@@ -3,9 +3,9 @@ ext {
 }
 
 java {
-  def javaVersion = JavaVersion.toVersion(System.getProperty("java.version"))
-  sourceCompatibility = javaVersion
-  targetCompatibility = javaVersion
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(25)
+  }
 }
 
 sourceSets {
