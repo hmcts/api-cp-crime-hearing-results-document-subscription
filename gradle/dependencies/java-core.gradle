@@ -16,6 +16,10 @@ sourceSets {
   }
 }
 
+tasks.named('wrapper') {
+  delete "${projectDir}/gradlew.bat"
+}
+
 tasks.withType(JavaCompile).configureEach {
   options.compilerArgs = ["-Xlint:unchecked", "-Werror"]
 }
