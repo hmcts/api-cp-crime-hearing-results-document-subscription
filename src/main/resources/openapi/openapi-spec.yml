@@ -16,7 +16,7 @@ servers:
   - url: https://api.example.com
 
 security:
-  - bearerAuth: []
+  - bearerAuth: [ ]
 
 tags:
   - name: Subscription
@@ -37,7 +37,6 @@ paths:
           description: The location where event data will be sent. Must be network accessible by the source server.
           schema:
             type: string
-            format: uri
             pattern: '^https://.*$'
           example: "https://client.example.com/events"
       requestBody:
@@ -59,7 +58,7 @@ paths:
               createSubscription:
                 summary: Example subscription creation request
                 value:
-                  eventTypes: ["PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT"]
+                  eventTypes: [ "PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT" ]
       responses:
         '201':
           description: Subscription created successfully
@@ -72,7 +71,7 @@ paths:
                     clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
                     notificationEndpoint:
                       callbackUrl: "https://client.example.com/events"
-                    eventTypes: ["PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT"]
+                    eventTypes: [ "PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT" ]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: null
               schema:
@@ -138,7 +137,7 @@ paths:
                     clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
                     notificationEndpoint:
                       callbackUrl: "https://client.example.com/events"
-                    eventTypes: ["PRISON_COURT_REGISTER_GENERATED"]
+                    eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: "2025-01-05T17:30:00Z"
               schema:
@@ -182,7 +181,7 @@ paths:
                 value:
                   notificationEndpoint:
                     callbackUrl: "https://client.example.com/new-hook"
-                  eventTypes: ["CUSTODIAL_RESULT"]
+                  eventTypes: [ "CUSTODIAL_RESULT" ]
             schema:
               $ref: '#/components/schemas/ClientSubscriptionRequest'
       responses:
@@ -196,7 +195,7 @@ paths:
                     clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
                     notificationEndpoint:
                       callbackUrl: "https://client.example.com/new-hook"
-                    eventTypes: ["CUSTODIAL_RESULT"]
+                    eventTypes: [ "CUSTODIAL_RESULT" ]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: "2025-01-10T09:15:00Z"
               schema:
@@ -265,7 +264,7 @@ paths:
 
       responses:
         '202':
-            description: accepted
+          description: accepted
         '400':
           description: bad_request
           content:
@@ -275,6 +274,39 @@ paths:
               example:
                 error: "invalid_request"
                 message: "eventTypes must contain at least one value."
+
+  /documents/pcr/{documentId}:
+    get:
+      summary: Retrieve PCR PDF by documentId
+      description: Returns the PCR PDF previously published for the given documentId.
+      operationId: getPcrDocument
+      tags:
+        - Notification
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Public document identifier assigned to the subscriber
+      responses:
+        '200':
+          description: PDF document (binary)
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+
 components:
   securitySchemes:
     bearerAuth:
