@@ -278,7 +278,7 @@ paths:
   /documents/{subscriptionId}/{documentId}:
     get:
       summary:  Retrieve PCR PDF for a specific subscription and document
-      description: Returns the PCR PDF previously published for the given subscriptionId and documentId. Access is validated against the subscription.
+      description: Returns the PCR PDF previously published for the given subscriptionId and documentId.
       operationId: getPcrDocumentBySubscription
       tags:
         - Notification
