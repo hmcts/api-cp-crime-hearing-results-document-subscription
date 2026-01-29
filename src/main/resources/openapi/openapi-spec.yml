@@ -275,14 +275,21 @@ paths:
                 error: "invalid_request"
                 message: "eventTypes must contain at least one value."
 
-  /documents/pcr/{documentId}:
+  /documents/{subscriptionId}/{documentId}:
     get:
-      summary: Retrieve PCR PDF by documentId
-      description: Returns the PCR PDF previously published for the given documentId.
-      operationId: getPcrDocument
+      summary:  Retrieve PCR PDF for a specific subscription and document
+      description: Returns the PCR PDF previously published for the given subscriptionId and documentId. Access is validated against the subscription.
+      operationId: getPcrDocumentBySubscription
       tags:
         - Notification
       parameters:
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Subscriber's subscription identifier
         - name: documentId
           in: path
           required: true
