@@ -261,9 +261,9 @@ paths:
 
   /client-subscriptions/{clientSubscriptionId}/documents/{documentId}:
     get:
-      summary:  Retrieve PCR PDF for a specific client subscription and document
-      description: Returns the PCR PDF previously published for the given clientSubscriptionId and documentId.
-      operationId: getPcrDocumentByClientSubscription
+      summary:  Retrieve PDF for the specified document id
+      description: Returns the PDF previously published for the given documentId.
+      operationId: getDocument
       tags:
         - Notification
       parameters:
@@ -290,7 +290,7 @@ paths:
                 type: string
                 format: binary
         '404':
-          description: Document not found
+          description: Document not found or the client subscription is missing/inactive
           content:
             application/json:
               schema:
