@@ -30,34 +30,18 @@ paths:
       operationId: createClientSubscription
       tags:
         - Subscription
-      parameters:
-        - name: callbackUrl
-          in: query
-          required: true
-          description: The location where event data will be sent. Must be network accessible by the source server. Event notifications will be POSTed to this URL with EventNotificationPayload in the request body.
-          schema:
-            type: string
-            pattern: '^https://.*$'
-          example: "https://client.example.com/events"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - eventTypes
-              properties:
-                eventTypes:
-                  type: array
-                  minItems: 1
-                  maxItems: 2
-                  items:
-                    $ref: '#/components/schemas/EventType'
+              $ref: '#/components/schemas/ClientSubscriptionRequest'
             examples:
               createSubscription:
                 summary: Example subscription creation request
                 value:
+                  notificationEndpoint:
+                    callbackUrl: "https://client.example.com/events"
                   eventTypes: [ "PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT" ]
       responses:
         '201':
@@ -91,7 +75,7 @@ paths:
           description: Unauthorized
       callbacks:
         onEvent:
-          '{$request.query.callbackUrl}':
+          '{$request.body#/notificationEndpoint/callbackUrl}':
             post:
               description: Event notification sent to the subscribed callback URL
               requestBody:
