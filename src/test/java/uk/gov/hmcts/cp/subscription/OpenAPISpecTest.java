@@ -38,8 +38,8 @@ class OpenAPISpecTest {
 
     @Test
     void notification_endpoint_should_have_correct_type() throws NoSuchFieldException {
-        Field webhookUrlField = NotificationEndpoint.class.getDeclaredField("callbackUrl");
-        assertThat(webhookUrlField.getType()).isEqualTo(String.class);
+        Field callbackUrlField = NotificationEndpoint.class.getDeclaredField("callbackUrl");
+        assertThat(callbackUrlField.getType()).isEqualTo(String.class);
     }
 
     @Test

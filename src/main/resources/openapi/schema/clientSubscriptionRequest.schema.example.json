@@ -1,6 +1,6 @@
 {
   "notificationEndpoint": {
-    "webhookUrl": "https://client.example.com/events"
+    "callbackUrl": "https://client.example.com/events"
   },
   "eventTypes": [
     "PRISON_COURT_REGISTER_GENERATED",
