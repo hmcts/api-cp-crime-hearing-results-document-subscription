@@ -34,7 +34,7 @@ paths:
         - name: callbackUrl
           in: query
           required: true
-          description: The location where event data will be sent. Must be network accessible by the source server.
+          description: The location where event data will be sent. Must be network accessible by the source server. Event notifications will be POSTed to this URL with EventNotificationPayload in the request body.
           schema:
             type: string
             pattern: '^https://.*$'
@@ -336,6 +336,7 @@ components:
         callbackUrl:
           type: string
           pattern: '^https://.*$'
+          description: The location where event data will be sent. Event notifications will be POSTed to this URL with EventNotificationPayload in the request body.
 
     ClientSubscriptionRequest:
       type: object
