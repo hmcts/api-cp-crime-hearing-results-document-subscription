@@ -1,7 +1,7 @@
 {
   "clientSubscriptionId": "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44",
   "notificationEndpoint": {
-    "webhookUrl": "https://client.example.com/events"
+    "callbackUrl": "https://client.example.com/events"
   },
   "eventTypes": [
     "PRISON_COURT_REGISTER_GENERATED"
