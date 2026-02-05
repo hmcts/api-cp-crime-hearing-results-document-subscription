@@ -226,6 +226,7 @@ paths:
       operationId: createNotificationPCR
       tags:
         - Notification
+        - Internal
       requestBody:
         required: true
         content:
@@ -371,6 +372,8 @@ components:
           type: string
         message:
           type: string
+
+
     PcrEventPayload:
       type: object
       description: >
@@ -447,149 +450,44 @@ components:
       type: object
       description: Payload sent to the callback URL when an event occurs
       required:
-        - eventType
-        - timestamp
-        - defendant
+        - caseUrn
+        - masterDefendantId
+        - defendantName
+        - defendantDateOfBirth
+        - documentId
+        - documentGeneratedTimestamp
+        - prisonEmailAddress
       properties:
-
-        eventType:
+        caseUrn:
           type: string
-          description: Type of the event
-          example: "PCR"
-
-        timestamp:
+          description: Case URN associated with the defendant
+          example: "CT98KRYCAP"
+        masterDefendantId:
+          type: string
+          format: uuid
+          description: Unique identifier for the master defendant
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        defendantName:
+          type: string
+          description: Full name of the defendant
+          example: "John Doe"
+        defendantDateOfBirth:
+          type: string
+          format: date
+          description: Date of birth of the defendant
+          example: "1990-05-15"
+        documentId:
+          type: string
+          format: uuid
+          description: Unique identifier of the document used by consumers while fetching it
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        documentGeneratedTimestamp:
           type: string
           format: date-time
-          description: Timestamp when the event occurred
+          description: Document generation timestamp
           example: "2024-01-15T10:30:00Z"
-
-        defendant:
-          type: object
-          description: Defendant information associated with the event
-          required:
-            - masterDefendantId
-            - name
-            - dateOfBirth
-            - cases
-          properties:
-            masterDefendantId:
-              type: string
-              format: uuid
-              description: Unique identifier for the master defendant
-              example: "550e8400-e29b-41d4-a716-446655440000"
-
-            name:
-              type: string
-              description: Full name of the defendant
-              example: "John Doe"
-
-            dateOfBirth:
-              type: string
-              format: date
-              description: Date of birth of the defendant
-              example: "1990-05-15"
-
-            custodyEstablishmentDetails:
-              type: object
-              description: Details of the custody establishment
-              properties:
-                emailAddress:
-                  type: string
-                  format: email
-                  description: Email address of the custody establishment
-                  example: "prison@example.com"
-
-            cases:
-              type: array
-              description: List of cases associated with the defendant
-              items:
-                type: object
-                required:
-                  - urn
-                properties:
-                  urn:
-                    type: string
-                    description: Case URN
-                    example: "CASE123456"
-
-
-                  details:
-                    type: string
-                    format: uri
-                    description: URI to retrieve full case details
-                    example: "http://example.com/cases/CASE123456"
-
-                  documents:
-                    type: array
-                    description: List of documents for this case
-                    items:
-                      type: object
-                      required:
-                        - url
-                        - timestamp
-                      properties:
-                        url:
-                          type: string
-                          format: uri
-                          description: Secure URL to access the document
-                          example: "https://subscription-service-host/documents/type/documentId"
-
-                        timestamp:
-                          type: string
-                          format: date-time
-                          description: Timestamp when the document was generated
-                          example: "2024-01-15T10:29:55.123Z"
-
-            applications:
-              type: array
-              description: List of applications associated with the defendant
-              items:
-                type: object
-                required:
-                  - urn
-                properties:
-                  urn:
-                    type: string
-                    description: Application reference
-                    example: "APP123456"
-                  documents:
-                    type: array
-                    description: List of documents for this application
-                    items:
-                      type: object
-                      required:
-                        - url
-                        - timestamp
-                      properties:
-                        url:
-                          type: string
-                          format: uri
-                          description: Secure URL to access the document
-                          example: "https://subscription-service-host/documents/type/documentId"
-
-                        timestamp:
-                          type: string
-                          format: date-time
-                          description: Timestamp when the document was generated
-                          example: "2024-01-15T10:29:55.123Z"
-
-            documents:
-              type: array
-              description: List of documents directly associated with the defendant
-              items:
-                type: object
-                required:
-                  - url
-                  - timestamp
-                properties:
-                  url:
-                    type: string
-                    format: uri
-                    description: Secure URL to access the document
-                    example: "https://subscription-service-host/documents/type/documentId"
-
-                  timestamp:
-                    type: string
-                    format: date-time
-                    description: Timestamp when the document was generated
-                    example: "2024-01-15T10:29:55.123Z"
+        prisonEmailAddress:
+          type: string
+          format: email
+          description: Email address of the prison
+          example: "prison@example.com"

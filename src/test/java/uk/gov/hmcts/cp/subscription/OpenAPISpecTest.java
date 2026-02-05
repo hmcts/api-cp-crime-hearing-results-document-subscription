@@ -7,6 +7,7 @@ import uk.gov.hmcts.cp.openapi.model.ClientSubscription;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
 import uk.gov.hmcts.cp.openapi.model.EventType;
 import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
+import uk.gov.hmcts.cp.openapi.model.EventNotificationPayload;
 import uk.gov.hmcts.cp.openapi.model.PcrEventPayload;
 import uk.gov.hmcts.cp.openapi.model.PcrEventPayloadDefendant;
 
@@ -98,5 +99,16 @@ class OpenAPISpecTest {
         assertThat(PcrEventPayloadDefendant.class.getDeclaredField("name").getType()).isEqualTo(String.class);
         assertThat(PcrEventPayloadDefendant.class.getDeclaredField("dateOfBirth").getType()).isEqualTo(LocalDate.class);
         assertThat(PcrEventPayloadDefendant.class.getDeclaredField("cases").getType()).isEqualTo(List.class);
+    }
+
+    @Test
+    void event_notification_payload_should_have_all_expected_fields() throws NoSuchFieldException {
+        assertThat(EventNotificationPayload.class.getDeclaredField("caseUrn").getType()).isEqualTo(String.class);
+        assertThat(EventNotificationPayload.class.getDeclaredField("masterDefendantId").getType()).isEqualTo(UUID.class);
+        assertThat(EventNotificationPayload.class.getDeclaredField("defendantName").getType()).isEqualTo(String.class);
+        assertThat(EventNotificationPayload.class.getDeclaredField("defendantDateOfBirth").getType()).isEqualTo(LocalDate.class);
+        assertThat(EventNotificationPayload.class.getDeclaredField("documentId").getType()).isEqualTo(UUID.class);
+        assertThat(EventNotificationPayload.class.getDeclaredField("documentGeneratedTimestamp").getType()).isEqualTo(Instant.class);
+        assertThat(EventNotificationPayload.class.getDeclaredField("prisonEmailAddress").getType()).isEqualTo(String.class);
     }
 }
