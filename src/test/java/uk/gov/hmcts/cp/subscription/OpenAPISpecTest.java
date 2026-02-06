@@ -8,6 +8,7 @@ import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
 import uk.gov.hmcts.cp.openapi.model.EventType;
 import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayload;
+import uk.gov.hmcts.cp.openapi.model.EventNotificationPayloadCasesInner;
 import uk.gov.hmcts.cp.openapi.model.PcrEventPayload;
 import uk.gov.hmcts.cp.openapi.model.PcrEventPayloadDefendant;
 
@@ -103,7 +104,8 @@ class OpenAPISpecTest {
 
     @Test
     void event_notification_payload_should_have_all_expected_fields() throws NoSuchFieldException {
-        assertThat(EventNotificationPayload.class.getDeclaredField("caseUrn").getType()).isEqualTo(String.class);
+        assertThat(EventNotificationPayload.class.getDeclaredField("cases").getType()).isAssignableFrom(List.class);
+        assertThat(EventNotificationPayloadCasesInner.class.getDeclaredField("urn").getType()).isEqualTo(String.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("masterDefendantId").getType()).isEqualTo(UUID.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("defendantName").getType()).isEqualTo(String.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("defendantDateOfBirth").getType()).isEqualTo(LocalDate.class);
