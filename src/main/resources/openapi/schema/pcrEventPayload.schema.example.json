@@ -1,0 +1,17 @@
+{
+  "eventId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "materialId": "123e4567-e89b-12d3-a456-426614174000",
+  "eventType": "PRISON_COURT_REGISTER_GENERATED",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "defendant": {
+    "masterDefendantId": "8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111",
+    "name": "John Doe",
+    "dateOfBirth": "1990-05-15",
+    "custodyEstablishmentDetails": {
+      "emailAddress": "prison@moj.gov.uk"
+    },
+    "cases": [
+      {"urn": "CT98KRYCAP"}
+    ]
+  }
+}
