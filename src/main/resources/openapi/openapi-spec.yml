@@ -21,6 +21,7 @@ security:
 tags:
   - name: Subscription
   - name: Notification
+  - name: Internal
 
 paths:
   /client-subscriptions:
