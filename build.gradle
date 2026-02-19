@@ -31,4 +31,5 @@ dependencies {
   // See docs/DEPENDENCIES.md that explains why we have JUST ONE implementation / published dependency
   // The rest are not included in published dependencies
   implementation 'io.swagger.core.v3:swagger-annotations:2.2.42'
+  implementation 'net.logstash.logback:logstash-logback-encoder:9.0'
 }
