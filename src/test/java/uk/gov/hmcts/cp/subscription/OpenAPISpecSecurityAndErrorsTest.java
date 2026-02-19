@@ -37,7 +37,7 @@ class OpenAPISpecSecurityAndErrorsTest {
     void spec_should_have_security_required_on_subscription_paths() throws Exception {
         String spec = loadSpec();
         assertThat(spec).contains("security:");
-        assertThat(spec).contains("bearerAuth: [ ]");
+        assertThat(spec).containsPattern("bearerAuth\\s*:\\s*\\[\\s*\\]");
     }
 
     private String loadSpec() throws Exception {
