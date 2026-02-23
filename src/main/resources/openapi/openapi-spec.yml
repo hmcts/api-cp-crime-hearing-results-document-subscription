@@ -92,8 +92,6 @@ paths:
                     if the event was received successfully
                 '400':
                   description: Bad request - the event payload was invalid
-                '500':
-                  description: Internal server error processing the event
 
 
   /client-subscriptions/{clientSubscriptionId}:
@@ -226,7 +224,6 @@ paths:
       description: Creates a pcr notification with material id and event types.
       operationId: createNotificationPCR
       tags:
-        - Notification
         - Internal
       requestBody:
         required: true
