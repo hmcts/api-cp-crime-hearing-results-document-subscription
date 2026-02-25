@@ -51,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gradle build cyclonedxBom -x test \
+          ./gradlew build cyclonedxBom -x test \
             -DGITHUB_REPOSITORY=${{ github.repository }} \
             -DGITHUB_ACTOR=${{ github.actor }} \
             -DGITHUB_TOKEN=$GITHUB_TOKEN

@@ -1,8 +1,5 @@
 .gradle
 /build/
-gradle/wrapper
-gradlew
-gradlew.bat
 *.class
 bin
 
