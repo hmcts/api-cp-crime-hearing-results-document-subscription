@@ -40,7 +40,7 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '25'
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
@@ -51,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gradle build cyclonedxBom -x test \
+          ./gradlew build cyclonedxBom -x test \
             -DGITHUB_REPOSITORY=${{ github.repository }} \
             -DGITHUB_ACTOR=${{ github.actor }} \
             -DGITHUB_TOKEN=$GITHUB_TOKEN
