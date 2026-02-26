@@ -24,23 +24,23 @@ apply {
 
 dependencies {
   // Java core
-  compileOnly 'org.projectlombok:lombok:1.18.38'
-  testCompileOnly 'org.projectlombok:lombok:1.18.38'
-  annotationProcessor 'org.projectlombok:lombok:1.18.38'
-  testAnnotationProcessor 'org.projectlombok:lombok:1.18.38'
-  testImplementation(platform('org.junit:junit-bom:6.0.1'))
+  compileOnly 'org.projectlombok:lombok:1.18.42'
+  testCompileOnly 'org.projectlombok:lombok:1.18.42'
+  annotationProcessor 'org.projectlombok:lombok:1.18.42'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.42'
+  testImplementation(platform('org.junit:junit-bom:6.0.3'))
   testImplementation 'org.junit.jupiter:junit-jupiter-api'
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-  implementation 'net.logstash.logback:logstash-logback-encoder:8.1'
+  implementation 'net.logstash.logback:logstash-logback-encoder:9.0'
 
 
   // Spring Boot Core
-  compileOnly 'org.springframework.boot:spring-boot-starter-web:4.0.0'
-  testImplementation 'org.springframework.boot:spring-boot-starter-web:4.0.0'
-  compileOnly 'org.springframework.boot:spring-boot-starter-validation:4.0.0'
-  testImplementation 'org.springframework.boot:spring-boot-starter-validation:4.0.0'
-  testImplementation 'org.springframework.boot:spring-boot-starter-test:4.0.0'
+  compileOnly 'org.springframework.boot:spring-boot-starter-web:4.0.3'
+  testImplementation 'org.springframework.boot:spring-boot-starter-web:4.0.3'
+  compileOnly 'org.springframework.boot:spring-boot-starter-validation:4.0.3'
+  testImplementation 'org.springframework.boot:spring-boot-starter-validation:4.0.3'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test:4.0.3'
 
 
   // OpenApi Client
