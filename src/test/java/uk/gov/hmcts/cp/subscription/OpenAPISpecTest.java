@@ -29,7 +29,7 @@ class OpenAPISpecTest {
         assertThat(EventType.class.isEnum()).isTrue();
         assertThat(EventType.class.getEnumConstants())
                 .extracting(Enum::name)
-                .containsExactlyInAnyOrder("PRISON_COURT_REGISTER_GENERATED", "CUSTODIAL_RESULT");
+                .containsExactlyInAnyOrder("PRISON_COURT_REGISTER_GENERATED");
     }
 
     @Test
