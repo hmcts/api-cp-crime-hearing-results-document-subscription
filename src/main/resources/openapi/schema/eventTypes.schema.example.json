@@ -1,0 +1,14 @@
+{
+    "eventTypes": [
+        {
+            "eventName": "PRISON_COURT_REGISTER_GENERATED",
+            "displayName": "Prison Court Register",
+            "category": "REGISTER"
+        },
+        {
+            "eventName": "WEE_CustodialSentence",
+            "displayName": "Warrant for Custodial Sentence",
+            "category": "WARRANT"
+        }
+    ]
+}

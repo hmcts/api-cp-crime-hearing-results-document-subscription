@@ -1,14 +1,17 @@
 package uk.gov.hmcts.cp.subscription;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import uk.gov.hmcts.cp.openapi.api.SubscriptionApi;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscription;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
-import uk.gov.hmcts.cp.openapi.model.EventType;
-import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayload;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayloadCasesInner;
+import uk.gov.hmcts.cp.openapi.model.EventType;
+import uk.gov.hmcts.cp.openapi.model.GetEventType;
+import uk.gov.hmcts.cp.openapi.model.GetEventTypes;
+import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
 import uk.gov.hmcts.cp.openapi.model.PcrEventPayload;
 import uk.gov.hmcts.cp.openapi.model.PcrEventPayloadDefendant;
 
@@ -42,6 +45,16 @@ class OpenAPISpecTest {
     void notification_endpoint_should_have_correct_type() throws NoSuchFieldException {
         Field callbackUrlField = NotificationEndpoint.class.getDeclaredField("callbackUrl");
         assertThat(callbackUrlField.getType()).isEqualTo(String.class);
+    }
+
+    @SneakyThrows
+    @Test
+    void get_event_types_response_should_have_expected_fields() {
+        Field eventTypesField = GetEventTypes.class.getDeclaredField("eventTypes");
+        assertThat(eventTypesField.getType()).isEqualTo(List.class);
+        assertThat(GetEventType.class).hasDeclaredFields("eventName");
+        assertThat(GetEventType.class).hasDeclaredFields("displayName");
+        assertThat(GetEventType.class).hasDeclaredFields("category");
     }
 
     @Test
