@@ -8,7 +8,6 @@ import uk.gov.hmcts.cp.openapi.model.ClientSubscription;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayload;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayloadCasesInner;
-//import uk.gov.hmcts.cp.openapi.model.GetEventTypes;
 import uk.gov.hmcts.cp.openapi.model.EventType;
 import uk.gov.hmcts.cp.openapi.model.GetEventType;
 import uk.gov.hmcts.cp.openapi.model.GetEventTypes;

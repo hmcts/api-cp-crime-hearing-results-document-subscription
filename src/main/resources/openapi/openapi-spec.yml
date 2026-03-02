@@ -141,7 +141,7 @@ paths:
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: "2025-01-05T17:30:00Z"
               schema:
-                $ref: '#/components/schemas/GetEventTypes'
+                $ref: '#/components/schemas/ClientSubscription'
 
         '404':
           description: Subscription not found
