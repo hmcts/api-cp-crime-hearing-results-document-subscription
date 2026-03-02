@@ -29,9 +29,9 @@ paths:
     get:
       summary: Get list of valid event types for subscription service
       description: Returns list of valid event types for subscription service
-      operationId: getEventTypes
+      operationId: GetEventTypes
       tags:
-        - EventTypes
+        - GetEventTypes
       responses:
         '200':
           description: Event types
@@ -141,7 +141,7 @@ paths:
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: "2025-01-05T17:30:00Z"
               schema:
-                $ref: '#/components/schemas/ClientSubscription'
+                $ref: '#/components/schemas/GetEventTypes'
 
         '404':
           description: Subscription not found
@@ -338,9 +338,13 @@ components:
           description: The location where event data will be sent. Event notifications will be POSTed to this URL with EventNotificationPayload in the request body.
 
     GetEventTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/GetEventType'
+      type: object
+      properties:
+        eventTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetEventType'
+
     GetEventType:
       type: object
       properties:
