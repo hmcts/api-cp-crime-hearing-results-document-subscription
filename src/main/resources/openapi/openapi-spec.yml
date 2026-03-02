@@ -24,6 +24,23 @@ tags:
   - name: Internal
 
 paths:
+
+  /event-types:
+    get:
+      summary: Get list of valid event types for subscription service
+      description: Returns list of valid event types for subscription service
+      operationId: getEventTypes
+      tags:
+        - EventTypes
+      responses:
+        '200':
+          description: Event types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEventTypes'
+
+
   /client-subscriptions:
     post:
       summary: Create a new client subscription
@@ -319,6 +336,20 @@ components:
           type: string
           pattern: '^https://.*$'
           description: The location where event data will be sent. Event notifications will be POSTed to this URL with EventNotificationPayload in the request body.
+
+    GetEventTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/GetEventType'
+    GetEventType:
+      type: object
+      properties:
+        eventName:
+          type: String
+        displayName:
+          type: String
+        category:
+          type: String
 
     ClientSubscriptionRequest:
       type: object
