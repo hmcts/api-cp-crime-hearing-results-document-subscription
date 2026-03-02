@@ -349,11 +349,14 @@ components:
       type: object
       properties:
         eventName:
-          type: String
+          type: string
+          example: "WEE_CustodialSentence"
         displayName:
-          type: String
+          type: string
+          example: "Warrant for Custodial Sentence"
         category:
-          type: String
+          type: string
+          example: "WARRANT"
 
     ClientSubscriptionRequest:
       type: object
