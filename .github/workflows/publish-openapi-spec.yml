@@ -3,6 +3,32 @@ name: Publish OpenAPI Spec to APIHub
 on:
   # Allows us to run this workflow manually from the Actions tab
   workflow_dispatch:
+    secrets:
+      SWAGGERHUB_API_KEY:
+        required: true
+    inputs:
+      upload_artifact_name:
+        required: true
+        type: string
+        description: upload_artifact_name
+      apihub_owner:
+        required: true
+        type: string
+        description: apihub_owner
+      api_name:
+        required: true
+        type: string
+        description: api_name
+      api_version:
+        required: true
+        type: string
+        description: api_version
+      is_release:
+        required: false
+        type: boolean
+        default: false
+        description: is_release
+
   workflow_call:
     secrets:
       SWAGGERHUB_API_KEY:
