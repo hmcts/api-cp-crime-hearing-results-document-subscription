@@ -267,22 +267,23 @@ paths:
                     urn: '70MR260673'
                   } ]
                 }
-            NowsCustodialSentence:
-              eventId: 'b37c7a93-4063-40e5-9b0a-0230a3cc2005',
-              materialId: '297b5c16-0983-405c-9128-614554b1c4fe',
-              eventType: 'WEE_CustodialSentence',
-              timestamp: '2024-01-15T10:30:00Z',
-              defendant: {
-                masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111',
-                name: 'John Doe',
-                dateOfBirth: '1990-05-15',
-                custodyEstablishmentDetails: {
-                  emailAddress: 'prison@moj.gov.uk'
-                },
-                cases: [ {
-                  urn: '10CT123123'
-                } ]
-              }
+
+              NowsCustodialSentence:
+                eventId: 'b37c7a93-4063-40e5-9b0a-0230a3cc2005',
+                materialId: '297b5c16-0983-405c-9128-614554b1c4fe',
+                eventType: 'WEE_CustodialSentence',
+                timestamp: '2024-01-15T10:30:00Z',
+                defendant: {
+                  masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111',
+                  name: 'John Doe',
+                  dateOfBirth: '1990-05-15',
+                  custodyEstablishmentDetails: {
+                    emailAddress: 'prison@moj.gov.uk'
+                  },
+                  cases: [ {
+                    urn: '10CT123123'
+                  } ]
+                }
 
       responses:
         '202':
