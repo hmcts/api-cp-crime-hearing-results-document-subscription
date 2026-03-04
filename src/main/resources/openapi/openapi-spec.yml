@@ -250,33 +250,37 @@ paths:
               $ref: '#/components/schemas/EventPayload'
             examples:
               PCR:
-              eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-              materialId: '123e4567-e89b-12d3-a456-426614174000'
-              eventType: 'PRISON_COURT_REGISTER_GENERATED'
-              timestamp: '2024-01-15T10:30:00Z'
-              defendant:
-                masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
-                name: 'John Doe'
-                dateOfBirth: '1990-05-15'
-                custodyEstablishmentDetails:
-                  emailAddress: 'prison@moj.gov.uk'
-                cases:
-                  - urn: 'CT98KRYCAP'
-                  - urn: 'AB75123123'
+                summary: Prison court register example
+                value:
+                  eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+                  materialId: '123e4567-e89b-12d3-a456-426614174000'
+                  eventType: 'PRISON_COURT_REGISTER_GENERATED'
+                  timestamp: '2024-01-15T10:30:00Z'
+                  defendant:
+                    masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
+                    name: 'John Doe'
+                    dateOfBirth: '1990-05-15'
+                    custodyEstablishmentDetails:
+                      emailAddress: 'prison@moj.gov.uk'
+                    cases:
+                      - urn: 'CT98KRYCAP'
+                      - urn: 'AB75123123'
 
               NowsCustodialSentence:
-                eventId: 'b37c7a93-4063-40e5-9b0a-0230a3cc2005'
-                materialId: '297b5c16-0983-405c-9128-614554b1c4fe'
-                eventType: 'WEE_CustodialSentence'
-                timestamp: '2025-02-15T10:40:00Z'
-                defendant:
-                  masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
-                  name: 'John Doe'
-                  dateOfBirth: '1990-05-15'
-                  custodyEstablishmentDetails:
-                    emailAddress: 'prison@moj.gov.uk'
-                  cases:
-                    - urn: 'CT98KRYCAP'
+                summary: Nows example
+                value:
+                  eventId: 'b37c7a93-4063-40e5-9b0a-0230a3cc2005'
+                  materialId: '297b5c16-0983-405c-9128-614554b1c4fe'
+                  eventType: 'WEE_CustodialSentence'
+                  timestamp: '2025-02-15T10:40:00Z'
+                  defendant:
+                    masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
+                    name: 'John Doe'
+                    dateOfBirth: '1990-05-15'
+                    custodyEstablishmentDetails:
+                      emailAddress: 'prison@moj.gov.uk'
+                    cases:
+                      - urn: 'CT98KRYCAP'
 
       responses:
         '202':
