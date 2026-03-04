@@ -249,7 +249,7 @@ paths:
             schema:
               $ref: '#/components/schemas/EventPayload'
             examples:
-              PrisonCourtRegister:
+              PCR:
                 eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
                 materialId: '123e4567-e89b-12d3-a456-426614174000'
                 eventType: 'PRISON_COURT_REGISTER_GENERATED'
