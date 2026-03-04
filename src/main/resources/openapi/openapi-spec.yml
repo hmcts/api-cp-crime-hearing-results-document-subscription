@@ -277,9 +277,7 @@ paths:
                   custodyEstablishmentDetails:
                     emailAddress: 'prison@moj.gov.uk'
                   cases: [ {
-                    urn: 'CT98KRYCAP'
-                  }, {
-                    urn: 'DY99CGYWAN'
+                    urn: '10CT123123'
                   } ]
 
       responses:
