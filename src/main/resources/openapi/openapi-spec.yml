@@ -265,15 +265,6 @@ paths:
       responses:
         '202':
           description: accepted
-        '400':
-          description: bad_request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                error: "invalid_request"
-                message: "eventTypes must contain at least one value."
 
   /notifications/pcr:
     post:
