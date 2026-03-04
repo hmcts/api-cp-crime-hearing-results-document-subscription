@@ -235,10 +235,41 @@ paths:
         '401':
           description: Unauthorized
 
+  /notifications:
+    post:
+      summary: Create a client notification.
+      description: Creates a client notification for given material id and event type
+      operationId: createNotification
+      tags:
+        - Internal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventPayload'
+            example:
+              eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+              materialId: '123e4567-e89b-12d3-a456-426614174000'
+              eventType: 'PRISON_COURT_REGISTER_GENERATED'
+              timestamp: '2024-01-15T10:30:00Z'
+              defendant:
+                masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
+                name: 'John Doe'
+                dateOfBirth: '1990-05-15'
+                custodyEstablishmentDetails:
+                  emailAddress: 'prison@moj.gov.uk'
+                cases:
+                  - urn: 'CT98KRYCAP'
+
+      responses:
+        '202':
+          description: accepted
+
   /notifications/pcr:
     post:
-      summary: Create a pcr notification.
-      description: Creates a pcr notification with material id and event types.
+      summary: Create a pcr notification - DEPRECATED
+      description: DEPRECATED - Use "/notifications" instead
       operationId: createNotificationPCR
       tags:
         - Internal
@@ -247,7 +278,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PcrEventPayload'
+              $ref: '#/components/schemas/EventPayload'
             example:
               eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
               materialId: '123e4567-e89b-12d3-a456-426614174000'
@@ -409,7 +440,7 @@ components:
           type: string
 
 
-    PcrEventPayload:
+    EventPayload:
       type: object
       description: >
         Payload representing a stored PCR document event with defendant and case details.

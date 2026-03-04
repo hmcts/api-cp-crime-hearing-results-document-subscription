@@ -3,7 +3,7 @@ name: CI Build and Publish (RELEASE)
 on:
   release:
     types: [ published ]
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows us to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:

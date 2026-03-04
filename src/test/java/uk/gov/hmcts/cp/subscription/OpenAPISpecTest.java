@@ -12,8 +12,8 @@ import uk.gov.hmcts.cp.openapi.model.EventType;
 import uk.gov.hmcts.cp.openapi.model.GetEventType;
 import uk.gov.hmcts.cp.openapi.model.GetEventTypes;
 import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
-import uk.gov.hmcts.cp.openapi.model.PcrEventPayload;
-import uk.gov.hmcts.cp.openapi.model.PcrEventPayloadDefendant;
+import uk.gov.hmcts.cp.openapi.model.EventPayload;
+import uk.gov.hmcts.cp.openapi.model.EventPayloadDefendant;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -105,14 +105,14 @@ class OpenAPISpecTest {
 
     @Test
     void pcr_event_payload_should_have_all_expected_fields() throws NoSuchFieldException {
-        assertThat(PcrEventPayload.class.getDeclaredField("eventId").getType()).isEqualTo(UUID.class);
-        assertThat(PcrEventPayload.class.getDeclaredField("eventType").getType()).isEqualTo(EventType.class);
-        assertThat(PcrEventPayload.class.getDeclaredField("timestamp").getType()).isEqualTo(Instant.class);
+        assertThat(EventPayload.class.getDeclaredField("eventId").getType()).isEqualTo(UUID.class);
+        assertThat(EventPayload.class.getDeclaredField("eventType").getType()).isEqualTo(EventType.class);
+        assertThat(EventPayload.class.getDeclaredField("timestamp").getType()).isEqualTo(Instant.class);
 
-        assertThat(PcrEventPayloadDefendant.class.getDeclaredField("masterDefendantId").getType()).isEqualTo(UUID.class);
-        assertThat(PcrEventPayloadDefendant.class.getDeclaredField("name").getType()).isEqualTo(String.class);
-        assertThat(PcrEventPayloadDefendant.class.getDeclaredField("dateOfBirth").getType()).isEqualTo(LocalDate.class);
-        assertThat(PcrEventPayloadDefendant.class.getDeclaredField("cases").getType()).isEqualTo(List.class);
+        assertThat(EventPayloadDefendant.class.getDeclaredField("masterDefendantId").getType()).isEqualTo(UUID.class);
+        assertThat(EventPayloadDefendant.class.getDeclaredField("name").getType()).isEqualTo(String.class);
+        assertThat(EventPayloadDefendant.class.getDeclaredField("dateOfBirth").getType()).isEqualTo(LocalDate.class);
+        assertThat(EventPayloadDefendant.class.getDeclaredField("cases").getType()).isEqualTo(List.class);
     }
 
     @Test

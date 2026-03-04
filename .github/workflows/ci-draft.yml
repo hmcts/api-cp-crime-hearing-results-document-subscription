@@ -1,4 +1,4 @@
-name: Build and Publish (DRAFT CANDIDATE VERSION)
+name: CI Build and Publish (DRAFT CANDIDATE VERSION)
 
 on:
   pull_request:
