@@ -1,7 +1,7 @@
 plugins {
   id 'java'
   id 'org.openapi.generator' version '7.20.0'
-  id 'com.diffplug.spotless' version '8.2.1'
+  id 'com.diffplug.spotless' version '8.3.0'
   id 'jacoco'
   id 'maven-publish'
   id "com.github.ben-manes.versions" version "0.53.0"
@@ -50,5 +50,5 @@ dependencies {
 
   // See docs/DEPENDENCIES.md that explains why we have JUST ONE implementation / published dependency
   // The rest are not included in published dependencies
-  implementation 'io.swagger.core.v3:swagger-annotations:2.2.43'
+  implementation 'io.swagger.core.v3:swagger-annotations:2.2.44'
 }
