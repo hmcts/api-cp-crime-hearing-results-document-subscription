@@ -73,7 +73,7 @@ jobs:
         # - It's available to download and inspect from the GitHub Actions UI
       - name: Upload SBOM
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: sbom
           path: build/reports/cyclonedx/bom.json
