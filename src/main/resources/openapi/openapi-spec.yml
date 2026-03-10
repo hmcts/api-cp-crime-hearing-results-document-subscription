@@ -63,7 +63,7 @@ paths:
                   eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
       responses:
         '201':
-          description: Subscription created successfully
+          description: Subscription created successfully.
           content:
             application/json:
               examples:
@@ -76,6 +76,8 @@ paths:
                     eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: null
+                    keyId: "kid_v1"
+                    secret: "c2VjcmV0LWJhc2U2NC1lbmNvZGVk"
               schema:
                 $ref: '#/components/schemas/ClientSubscription'
 
@@ -96,6 +98,24 @@ paths:
           '{$request.body#/notificationEndpoint/callbackUrl}':
             post:
               description: Event notification sent to the subscribed callback URL
+              parameters:
+                - name: X-Key-Id
+                  in: header
+                  required: true
+                  description: Identifier of the key used to sign this callback. Matches the keyId issued when the subscription was created.
+                  schema:
+                    type: string
+                    example: "kid_v1"
+                - name: X-Signature
+                  in: header
+                  required: true
+                  description: >
+                    HMAC-SHA256 signature of the callback request using the subscription's shared secret,
+                    computed over HTTP method + path + body (canonical format).
+                    The secret is returned once at subscription creation.
+                  schema:
+                    type: string
+                    example: "base64-encoded-signature"
               requestBody:
                 description: Event payload containing defendant and case information
                 content:
@@ -448,6 +468,17 @@ components:
           type:
             - string
           format: date-time
+        keyId:
+          type: string
+          description: Identifier for the shared secret used to sign outbound callbacks for this subscription.
+          example: "kid_v1"
+        secret:
+          type: string
+          writeOnly: true
+          description: >
+            Base64-encoded shared secret used to sign outbound callbacks for this subscription.
+            Returned in the create subscription response. Not returned by subsequent GET operations.
+          example: "c2VjcmV0LWJhc2U2NC1lbmNvZGVk"
     ErrorResponse:
       type: object
       required:
