@@ -79,6 +79,8 @@ class OpenAPISpecTest {
         assertThat(ClientSubscription.class).hasDeclaredFields("eventTypes");
         assertThat(ClientSubscription.class).hasDeclaredFields("createdAt");
         assertThat(ClientSubscription.class).hasDeclaredFields("updatedAt");
+        assertThat(ClientSubscription.class).hasDeclaredFields("keyId");
+        assertThat(ClientSubscription.class).hasDeclaredFields("secret");
     }
 
     @Test
@@ -88,12 +90,16 @@ class OpenAPISpecTest {
         Field eventTypesField = ClientSubscription.class.getDeclaredField("eventTypes");
         Field createdAtField = ClientSubscription.class.getDeclaredField("createdAt");
         Field updatedAtField = ClientSubscription.class.getDeclaredField("updatedAt");
+        Field keyIdField = ClientSubscription.class.getDeclaredField("keyId");
+        Field secretField = ClientSubscription.class.getDeclaredField("secret");
 
         assertThat(clientSubscriptionIdField.getType()).isEqualTo(UUID.class);
         assertThat(notificationEndpointField.getType()).isEqualTo(NotificationEndpoint.class);
         assertThat(eventTypesField.getType()).isAssignableFrom(List.class);
         assertThat(createdAtField.getType()).isEqualTo(Instant.class);
         assertThat(updatedAtField.getType()).isEqualTo(Instant.class);
+        assertThat(keyIdField.getType()).isEqualTo(String.class);
+        assertThat(secretField.getType()).isEqualTo(String.class);
     }
 
     @Test

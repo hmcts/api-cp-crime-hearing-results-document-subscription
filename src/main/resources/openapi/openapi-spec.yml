@@ -39,6 +39,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetEventTypes'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
 
   /client-subscriptions:
@@ -48,6 +51,8 @@ paths:
       operationId: createClientSubscription
       tags:
         - Subscription
+      parameters:
+        - $ref: '#/components/parameters/XCorrelationId'
       requestBody:
         required: true
         content:
@@ -63,7 +68,7 @@ paths:
                   eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
       responses:
         '201':
-          description: Subscription created successfully.
+          description: Subscription created successfully
           content:
             application/json:
               examples:
@@ -74,12 +79,15 @@ paths:
                     notificationEndpoint:
                       callbackUrl: "https://client.example.com/events"
                     eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
-                    createdAt: "2025-01-01T10:00:00Z"
-                    updatedAt: null
                     keyId: "kid_v1"
                     secret: "c2VjcmV0LWJhc2U2NC1lbmNvZGVk"
+                    createdAt: "2025-01-01T10:00:00Z"
+                    updatedAt: null
               schema:
                 $ref: '#/components/schemas/ClientSubscription'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '400':
           description: Invalid request payload
@@ -90,15 +98,22 @@ paths:
               example:
                 error: "invalid_request"
                 message: "eventTypes must contain at least one value."
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '401':
           description: Unauthorized
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
       callbacks:
         onEvent:
           '{$request.body#/notificationEndpoint/callbackUrl}':
             post:
               description: Event notification sent to the subscribed callback URL
               parameters:
+                - $ref: '#/components/parameters/XCorrelationId'
                 - name: X-Key-Id
                   in: header
                   required: true
@@ -127,6 +142,9 @@ paths:
                   description: |
                     Your server implementation should return this HTTP status code
                     if the event was received successfully
+                  headers:
+                    X-Correlation-Id:
+                      $ref: '#/components/headers/XCorrelationId'
                 '400':
                   description: Bad request - the event payload was invalid
 
@@ -146,6 +164,7 @@ paths:
             type: string
             format: uuid
           example: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
+        - $ref: '#/components/parameters/XCorrelationId'
       responses:
         '200':
           description: Subscription object
@@ -162,7 +181,6 @@ paths:
                     updatedAt: "2025-01-05T17:30:00Z"
               schema:
                 $ref: '#/components/schemas/ClientSubscription'
-
         '404':
           description: Subscription not found
           content:
@@ -172,6 +190,9 @@ paths:
               example:
                 error: "not_found"
                 message: "No subscription exists for ID aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44."
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '401':
           description: Unauthorized
@@ -191,6 +212,7 @@ paths:
           schema:
             type: string
             format: uuid
+        - $ref: '#/components/parameters/XCorrelationId'
       requestBody:
         required: true
         content:
@@ -220,15 +242,27 @@ paths:
                     updatedAt: "2025-01-10T09:15:00Z"
               schema:
                 $ref: '#/components/schemas/ClientSubscription'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '400':
           description: Invalid request
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '404':
           description: Subscription not found
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '401':
           description: Unauthorized
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
 
     delete:
@@ -245,15 +279,25 @@ paths:
           schema:
             type: string
             format: uuid
+        - $ref: '#/components/parameters/XCorrelationId'
       responses:
         '204':
           description: Deleted successfully
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '404':
           description: Subscription not found
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '401':
           description: Unauthorized
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
   /notifications:
     post:
@@ -262,6 +306,8 @@ paths:
       operationId: createNotification
       tags:
         - Internal
+      parameters:
+        - $ref: '#/components/parameters/XCorrelationId'
       requestBody:
         required: true
         content:
@@ -305,6 +351,9 @@ paths:
       responses:
         '202':
           description: accepted
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
   /notifications/pcr:
     post:
@@ -313,6 +362,8 @@ paths:
       operationId: createNotificationPCR
       tags:
         - Internal
+      parameters:
+          - $ref: '#/components/parameters/XCorrelationId'
       requestBody:
         required: true
         content:
@@ -336,6 +387,9 @@ paths:
       responses:
         '202':
           description: accepted
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
         '400':
           description: bad_request
           content:
@@ -345,6 +399,9 @@ paths:
               example:
                 error: "invalid_request"
                 message: "eventTypes must contain at least one value."
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
   /client-subscriptions/{clientSubscriptionId}/documents/{documentId}:
     get:
@@ -368,6 +425,7 @@ paths:
             type: string
             format: uuid
           description: Public document identifier assigned to the subscriber
+        - $ref: '#/components/parameters/XCorrelationId'
       responses:
         '200':
           description: PDF document (binary)
@@ -376,14 +434,23 @@ paths:
               schema:
                 type: string
                 format: binary
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
         '404':
           description: Document not found or the client subscription is missing/inactive
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
         '401':
           description: Unauthorized
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
 components:
   securitySchemes:
@@ -391,6 +458,25 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+
+  headers:
+    XCorrelationId:
+      description: Correlation identifier for this request/response, used for end-to-end tracing.
+      schema:
+        type: string
+        format: uuid
+        example: "bf931a90-3e3f-4e8e-a8e4-a4ca9ac07830"
+
+  parameters:
+    XCorrelationId:
+      name: X-Correlation-Id
+      in: header
+      required: false
+      description: Optional correlation identifier for end-to-end tracing.
+      schema:
+        type: string
+        format: uuid
+        example: "d679fd61-061f-4440-9623-36280f0807b7"
 
   schemas:
     EventType:
@@ -470,7 +556,7 @@ components:
           format: date-time
         keyId:
           type: string
-          description: Identifier for the shared secret used to sign outbound callbacks for this subscription.
+          description: Identifier for the shared secret used to sign outbound callbacks for this subscription
           example: "kid_v1"
         secret:
           type: string
