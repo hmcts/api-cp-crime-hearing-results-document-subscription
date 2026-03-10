@@ -79,8 +79,8 @@ paths:
                     notificationEndpoint:
                       callbackUrl: "https://client.example.com/events"
                     eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
-                    keyId: "kid_v1"
-                    secret: "c2VjcmV0LWJhc2U2NC1lbmNvZGVk"
+                    keyId: "kid_example"
+                    secret: "example-base64-encoded-secret"
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: null
               schema:
