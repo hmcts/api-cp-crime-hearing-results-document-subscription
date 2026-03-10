@@ -124,10 +124,7 @@ paths:
                 - name: X-Signature
                   in: header
                   required: true
-                  description: >
-                    HMAC-SHA256 signature of the callback request using the subscription's shared secret,
-                    computed over HTTP method + path + body (canonical format).
-                    The secret is returned once at subscription creation.
+                  description: HMAC-SHA256 signature of the callback request using the subscription's shared secret. The secret is returned once at subscription creation.
                   schema:
                     type: string
                     example: "base64-encoded-signature"
