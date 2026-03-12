@@ -38,7 +38,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetEventTypes'
+                $ref: '#/components/schemas/EventTypeResponse'
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -352,54 +352,6 @@ paths:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
 
-  /notifications/pcr:
-    post:
-      summary: Create a pcr notification - DEPRECATED
-      description: DEPRECATED - Use "/notifications" instead
-      operationId: createNotificationPCR
-      tags:
-        - Internal
-      parameters:
-          - $ref: '#/components/parameters/XCorrelationId'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EventPayload'
-            example:
-              eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-              materialId: '123e4567-e89b-12d3-a456-426614174000'
-              eventType: 'PRISON_COURT_REGISTER_GENERATED'
-              timestamp: '2024-01-15T10:30:00Z'
-              defendant:
-                masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
-                name: 'John Doe'
-                dateOfBirth: '1990-05-15'
-                custodyEstablishmentDetails:
-                  emailAddress: 'prison@moj.gov.uk'
-                cases:
-                  - urn: 'CT98KRYCAP'
-
-      responses:
-        '202':
-          description: accepted
-          headers:
-            X-Correlation-Id:
-              $ref: '#/components/headers/XCorrelationId'
-        '400':
-          description: bad_request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              example:
-                error: "invalid_request"
-                message: "eventTypes must contain at least one value."
-          headers:
-            X-Correlation-Id:
-              $ref: '#/components/headers/XCorrelationId'
-
   /client-subscriptions/{clientSubscriptionId}/documents/{documentId}:
     get:
       summary: Retrieve PDF for the specified document id
@@ -491,15 +443,15 @@ components:
           pattern: '^https://.*$'
           description: The location where event data will be sent. Event notifications will be POSTed to this URL with EventNotificationPayload in the request body.
 
-    GetEventTypes:
+    EventTypeResponse:
       type: object
       properties:
-        eventTypes:
+        events:
           type: array
           items:
-            $ref: '#/components/schemas/GetEventType'
+            $ref: '#/components/schemas/EventTypePayload'
 
-    GetEventType:
+    EventTypePayload:
       type: object
       properties:
         eventName:
