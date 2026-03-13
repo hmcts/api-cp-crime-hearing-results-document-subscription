@@ -9,8 +9,8 @@ import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayload;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayloadCasesInner;
 import uk.gov.hmcts.cp.openapi.model.EventType;
-import uk.gov.hmcts.cp.openapi.model.GetEventType;
-import uk.gov.hmcts.cp.openapi.model.GetEventTypes;
+import uk.gov.hmcts.cp.openapi.model.EventTypePayload;
+import uk.gov.hmcts.cp.openapi.model.EventTypeResponse;
 import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
 import uk.gov.hmcts.cp.openapi.model.EventPayload;
 import uk.gov.hmcts.cp.openapi.model.EventPayloadDefendant;
@@ -50,11 +50,11 @@ class OpenAPISpecTest {
     @SneakyThrows
     @Test
     void get_event_types_response_should_have_expected_fields() {
-        Field eventTypesField = GetEventTypes.class.getDeclaredField("eventTypes");
+        Field eventTypesField = EventTypeResponse.class.getDeclaredField("events");
         assertThat(eventTypesField.getType()).isEqualTo(List.class);
-        assertThat(GetEventType.class).hasDeclaredFields("eventName");
-        assertThat(GetEventType.class).hasDeclaredFields("displayName");
-        assertThat(GetEventType.class).hasDeclaredFields("category");
+        assertThat(EventTypePayload.class).hasDeclaredFields("eventName");
+        assertThat(EventTypePayload.class).hasDeclaredFields("displayName");
+        assertThat(EventTypePayload.class).hasDeclaredFields("category");
     }
 
     @Test
