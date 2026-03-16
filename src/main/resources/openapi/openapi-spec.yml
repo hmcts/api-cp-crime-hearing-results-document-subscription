@@ -79,8 +79,9 @@ paths:
                     notificationEndpoint:
                       callbackUrl: "https://client.example.com/events"
                     eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
-                    keyId: "kid_example"
-                    secret: "example-base64-encoded-secret"
+                    hmac:
+                      keyId: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+                      secret: "example-base64-encoded-secret"
                     createdAt: "2025-01-01T10:00:00Z"
                     updatedAt: null
               schema:
@@ -120,7 +121,7 @@ paths:
                   description: Identifier of the key used to sign this callback. Matches the keyId issued when the subscription was created.
                   schema:
                     type: string
-                    example: "kid_v1"
+                    example: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
                 - name: X-Signature
                   in: header
                   required: true
@@ -503,17 +504,23 @@ components:
           type:
             - string
           format: date-time
+        hmac:
+          $ref: '#/components/schemas/HmacCredentials'
+    HmacCredentials:
+      type: object
+      description: HMAC credentials issued at subscription creation for signing outbound callbacks.
+      properties:
         keyId:
           type: string
           description: Identifier for the shared secret used to sign outbound callbacks for this subscription
-          example: "kid_v1"
+          example: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
         secret:
           type: string
           writeOnly: true
-          description: >
+          description:
             Base64-encoded shared secret used to sign outbound callbacks for this subscription.
             Returned in the create subscription response. Not returned by subsequent GET operations.
-          example: "c2VjcmV0LWJhc2U2NC1lbmNvZGVk"
+          example: "example-base64-encoded-secret"
     ErrorResponse:
       type: object
       required:
@@ -525,10 +532,9 @@ components:
         message:
           type: string
 
-
     EventPayload:
       type: object
-      description: >
+      description:
         Payload representing a stored PCR document event with defendant and case details.
       required:
         - eventId
@@ -549,12 +555,10 @@ components:
           type: string
           description: Type of the event, e.g., PRISON_COURT_REGISTER_GENERATED
           $ref: '#/components/schemas/EventType'
-
         timestamp:
           type: string
           format: date-time
           description: Timestamp when the event occurred
-
         defendant:
           type: object
           required:
@@ -566,16 +570,13 @@ components:
               type: string
               format: uuid
               description: Unique identifier for the master defendant
-
             name:
               type: string
               description: Full name of the defendant
-
             dateOfBirth:
               type: string
               format: date
               description: Date of birth of the defendant
-
             custodyEstablishmentDetails:
               type: object
               description: Details of the custody establishment
@@ -584,7 +585,6 @@ components:
                   type: string
                   format: email
                   description: Email address of the prison
-
             cases:
               type: array
               description: List of cases associated with the defendant
@@ -596,7 +596,6 @@ components:
                   urn:
                     type: string
                     description: Case URN associated with the defendant
-
 
     EventNotificationPayload:
       type: object
