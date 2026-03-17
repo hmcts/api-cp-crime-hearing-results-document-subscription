@@ -39,6 +39,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventTypeResponse'
+              examples:
+                Event-Types Example:
+                  $ref: '#/components/examples/EventTypesResponse'
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -61,29 +64,15 @@ paths:
               $ref: '#/components/schemas/ClientSubscriptionRequest'
             examples:
               createSubscription:
-                summary: Example subscription creation request
-                value:
-                  notificationEndpoint:
-                    callbackUrl: "https://client.example.com/events"
-                  eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
+                $ref: '#/components/examples/createSubscriptionRequest'
       responses:
         '201':
           description: Subscription created successfully
           content:
             application/json:
               examples:
-                createdSubscription:
-                  summary: Example subscription creation response
-                  value:
-                    clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
-                    notificationEndpoint:
-                      callbackUrl: "https://client.example.com/events"
-                    eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
-                    hmac:
-                      keyId: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
-                      secret: "example-base64-encoded-secret"
-                    createdAt: "2025-01-01T10:00:00Z"
-                    updatedAt: null
+                createSubscription:
+                  $ref: '#/components/examples/createSubscriptionResponse'
               schema:
                 $ref: '#/components/schemas/ClientSubscription'
           headers:
@@ -96,9 +85,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                error: "invalid_request"
-                message: "eventTypes must contain at least one value."
+              examples:
+                createSubscriptionError:
+                  $ref: '#/components/examples/createSubscriptionError'
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -169,25 +158,20 @@ paths:
           content:
             application/json:
               examples:
-                subscription:
-                  value:
-                    clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
-                    notificationEndpoint:
-                      callbackUrl: "https://client.example.com/events"
-                    eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
-                    createdAt: "2025-01-01T10:00:00Z"
-                    updatedAt: "2025-01-05T17:30:00Z"
+                getSubscriptionResponse:
+                  $ref: '#/components/examples/getSubscriptionResponse'
               schema:
                 $ref: '#/components/schemas/ClientSubscription'
+
         '404':
           description: Subscription not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                error: "not_found"
-                message: "No subscription exists for ID aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44."
+              examples:
+                getSubscriptionError:
+                  $ref: '#/components/examples/getSubscriptionError'
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -217,11 +201,7 @@ paths:
           application/json:
             examples:
               updateSubscription:
-                summary: Example update request
-                value:
-                  notificationEndpoint:
-                    callbackUrl: "https://client.example.com/new-hook"
-                  eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
+                $ref: '#/components/examples/updateSubscription'
             schema:
               $ref: '#/components/schemas/ClientSubscriptionRequest'
       responses:
@@ -230,14 +210,8 @@ paths:
           content:
             application/json:
               examples:
-                updatedSubscription:
-                  value:
-                    clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
-                    notificationEndpoint:
-                      callbackUrl: "https://client.example.com/new-hook"
-                    eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
-                    createdAt: "2025-01-01T10:00:00Z"
-                    updatedAt: "2025-01-10T09:15:00Z"
+                updatedSubscriptionResponse:
+                  $ref: '#/components/examples/updatedSubscriptionResponse'
               schema:
                 $ref: '#/components/schemas/ClientSubscription'
           headers:
@@ -314,37 +288,10 @@ paths:
               $ref: '#/components/schemas/EventPayload'
             examples:
               PCR:
-                summary: Prison court register example
-                value:
-                  eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-                  materialId: '123e4567-e89b-12d3-a456-426614174000'
-                  eventType: 'PRISON_COURT_REGISTER_GENERATED'
-                  timestamp: '2024-01-15T10:30:00Z'
-                  defendant:
-                    masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
-                    name: 'John Doe'
-                    dateOfBirth: '1990-05-15'
-                    custodyEstablishmentDetails:
-                      emailAddress: 'prison@moj.gov.uk'
-                    cases:
-                      - urn: 'CT98KRYCAP'
-                      - urn: 'AB75123123'
-
+                $ref: '#/components/examples/PCR'
               NowsCustodialSentence:
-                summary: Nows example
-                value:
-                  eventId: 'b37c7a93-4063-40e5-9b0a-0230a3cc2005'
-                  materialId: '297b5c16-0983-405c-9128-614554b1c4fe'
-                  eventType: 'WEE_CustodialSentence'
-                  timestamp: '2025-02-15T10:40:00Z'
-                  defendant:
-                    masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
-                    name: 'John Doe'
-                    dateOfBirth: '1990-05-15'
-                    custodyEstablishmentDetails:
-                      emailAddress: 'prison@moj.gov.uk'
-                    cases:
-                      - urn: 'CT98KRYCAP'
+                $ref: '#/components/examples/NowsCustodialSentence'
+
 
       responses:
         '202':
@@ -457,13 +404,10 @@ components:
       properties:
         eventName:
           type: string
-          example: "WEE_CustodialSentence"
         displayName:
           type: string
-          example: "Warrant for Custodial Sentence"
         category:
           type: string
-          example: "WARRANT"
 
     ClientSubscriptionRequest:
       type: object
@@ -506,6 +450,7 @@ components:
           format: date-time
         hmac:
           $ref: '#/components/schemas/HmacCredentials'
+
     HmacCredentials:
       type: object
       description: HMAC credentials issued at subscription creation for signing outbound callbacks.
@@ -521,6 +466,7 @@ components:
             Base64-encoded shared secret used to sign outbound callbacks for this subscription.
             Returned in the create subscription response. Not returned by subsequent GET operations.
           example: "example-base64-encoded-secret"
+
     ErrorResponse:
       type: object
       required:
@@ -651,3 +597,105 @@ components:
           format: email
           description: Email address of the prison
           example: "prison@example.com"
+
+  examples:
+    EventTypesResponse:
+      summary: Example Event-Types response
+      value:
+        eventTypes: [{
+          eventName: WEE_CustodialSentence,
+          displayName: Warrant for Custodial Sentence,
+          category: WARRANT
+        }]
+
+    createSubscriptionRequest:
+      summary: Example subscription creation request
+      value:
+        notificationEndpoint:
+          callbackUrl: "https://client.example.com/events"
+        eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
+
+    createSubscriptionResponse:
+      summary: Example subscription creation response
+      value:
+        clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
+        notificationEndpoint:
+          callbackUrl: "https://client.example.com/events"
+        eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
+        hmac:
+          keyId: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+          secret: "example-base64-encoded-secret"
+        createdAt: "2025-01-01T10:00:00Z"
+        updatedAt: null
+
+    createSubscriptionError:
+      summary: Example subscription creation error response
+      value:
+        error: "invalid_request"
+        message: "eventTypes must contain at least one value."
+
+    getSubscriptionResponse:
+      summary: Example GET subscription response
+      value:
+        clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
+        notificationEndpoint:
+          callbackUrl: "https://client.example.com/events"
+        eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
+        createdAt: "2025-01-01T10:00:00Z"
+        updatedAt: "2025-01-05T17:30:00Z"
+
+    getSubscriptionError:
+      summary: Example GET subscription error response
+      value:
+        error: "not_found"
+        message: "No subscription exists for ID aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44."
+
+    updateSubscription:
+      summary: Example update request
+      value:
+        notificationEndpoint:
+          callbackUrl: "https://client.example.com/new-hook"
+        eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
+
+    updatedSubscriptionResponse:
+      summary: Example update subscription response
+      value:
+        clientSubscriptionId: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
+        notificationEndpoint:
+          callbackUrl: "https://client.example.com/new-hook"
+        eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
+        createdAt: "2025-01-01T10:00:00Z"
+        updatedAt: "2025-01-10T09:15:00Z"
+
+    PCR:
+      summary: Prison court register example
+      value:
+        eventId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
+        materialId: '123e4567-e89b-12d3-a456-426614174000'
+        eventType: 'PRISON_COURT_REGISTER_GENERATED'
+        timestamp: '2024-01-15T10:30:00Z'
+        defendant:
+          masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
+          name: 'John Doe'
+          dateOfBirth: '1990-05-15'
+          custodyEstablishmentDetails:
+            emailAddress: 'prison@moj.gov.uk'
+          cases:
+            - urn: 'CT98KRYCAP'
+            - urn: 'AB75123123'
+
+    NowsCustodialSentence:
+      summary: Nows example
+      value:
+        eventId: 'b37c7a93-4063-40e5-9b0a-0230a3cc2005'
+        materialId: '297b5c16-0983-405c-9128-614554b1c4fe'
+        eventType: 'WEE_CustodialSentence'
+        timestamp: '2025-02-15T10:40:00Z'
+        defendant:
+          masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
+          name: 'John Doe'
+          dateOfBirth: '1990-05-15'
+          custodyEstablishmentDetails:
+            emailAddress: 'prison@moj.gov.uk'
+          cases:
+            - urn: 'CT98KRYCAP'
