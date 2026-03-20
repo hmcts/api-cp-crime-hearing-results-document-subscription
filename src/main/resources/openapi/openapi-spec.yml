@@ -378,6 +378,49 @@ components:
   schemas:
     EventType:
       type: string
+      description: |
+        Possible values:
+          - PRISON_COURT_REGISTER_GENERATED
+          - WEE_Layout5
+          - NEE_DetentionOnRecommendationForDeportation
+          - OEE_MedicalRemandAdditionalDetails
+          - WEE_RemandAfterBailAppealByProsecutor
+          - WEE_CustodialSentence
+          - WEE_CustodialSentenceWitness
+          - WEE_CommittalToCrownCourtForConsiderationOfTheQuestionOfBailOnAChargeOfMurder
+          - WEE_CommittalToCrownCourtForSentence
+          - WEE_SendingToCrownCourtForTrial
+          - OEE_BailAppealEndOfCustody
+          - WEE_CommitmentPendingTransferToServiceCustody
+          - WEE_NonPaymentOfMoneyOwedCivilDebt
+          - WEE_CustodyWarrantOnDischargeOfExtraditionPendingAppeal
+          - WEE_CustodyWarrantOnDischargeOfExtraditionPendingAppealPart2
+          - WEE_CustodyWarrantOnExtradition
+          - WEE_CustodyWarrantOnExtraditionCategory2Territory
+          - WEE_CustodyWarrantOnExtraditionWithConsent
+          - WEE_CustodyWarrantOnExtraditionWithBailDirection
+          - WEE_CustodyWarrantOnExtraditionWithBailDirectionWithConsent
+          - WEE_CustodyWarrantOnExtraditionWithBailDirectionCategory2Territory
+          - WEE_CustodyWarrantSendingToSecretaryOfStateCategory2Territory
+          - WEE_CustodyWarrantSendingToSecretaryOfStateOnConsentCategory2Territory
+          - WEE_CustodyWarrantWithBailDirectionOnDischargeOfExtraditionPendingAppeal
+          - WEE_CustodyWarrantWithBailDirectionOnDischargeOfExtraditionPendingAppealPart2
+          - WEE_CustodyWarrantWithBailDirectionSendingToSecretaryOfStateCategory2Territory
+          - WEE_CustodyWarrantWithBailDirectionSendingToSecretaryOfStateOnConsentCategory2Territory
+          - WEE_ExtraditionRemandAfterBailAppealByProsecutor
+          - WEE_ExtraditionSupplementToCustodyWarrant
+          - OBE_TerminationOfFootballBanning
+          - OBE_ChangeOfFootballBanning
+          - NEE_FootballBanning
+          - WEE_Remand
+          - WXE_RemandWarrantYouthDetentionAccommodation
+          - OXE_DetentionAndTraining
+          - WEE_InjunctionDetention
+          - OPE_SupervisionOnBreachOfDetentionAndTraining
+          - WEE_CommittalToCrownCourtAuthorityToHoldInYouthDetentionAccommodation
+          - WEE_Detention
+          - WEE_DetentionInYouthDetentionAccommodationBreach
+          - WEE_SendingToCrownCourtAuthorityToHoldInYouthDetentionAccommodation
 
     NotificationEndpoint:
       type: object
