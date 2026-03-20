@@ -8,7 +8,6 @@ import uk.gov.hmcts.cp.openapi.model.ClientSubscription;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayload;
 import uk.gov.hmcts.cp.openapi.model.EventNotificationPayloadCasesInner;
-import uk.gov.hmcts.cp.openapi.model.EventType;
 import uk.gov.hmcts.cp.openapi.model.EventTypePayload;
 import uk.gov.hmcts.cp.openapi.model.EventTypeResponse;
 import uk.gov.hmcts.cp.openapi.model.HmacCredentials;
@@ -27,14 +26,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 class OpenAPISpecTest {
-
-    @Test
-    void event_type_enum_should_have_expected_values() {
-        assertThat(EventType.class.isEnum()).isTrue();
-        assertThat(EventType.class.getEnumConstants())
-                .extracting(Enum::name)
-                .containsExactlyInAnyOrder("PRISON_COURT_REGISTER_GENERATED");
-    }
 
     @Test
     void notification_endpoint_should_have_expected_fields() {
@@ -116,7 +107,7 @@ class OpenAPISpecTest {
     @Test
     void pcr_event_payload_should_have_all_expected_fields() throws NoSuchFieldException {
         assertThat(EventPayload.class.getDeclaredField("eventId").getType()).isEqualTo(UUID.class);
-        assertThat(EventPayload.class.getDeclaredField("eventType").getType()).isEqualTo(EventType.class);
+        assertThat(EventPayload.class.getDeclaredField("eventType").getType()).isEqualTo(String.class);
         assertThat(EventPayload.class.getDeclaredField("timestamp").getType()).isEqualTo(Instant.class);
 
         assertThat(EventPayloadDefendant.class.getDeclaredField("masterDefendantId").getType()).isEqualTo(UUID.class);

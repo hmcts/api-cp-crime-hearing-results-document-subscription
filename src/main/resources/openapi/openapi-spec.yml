@@ -378,8 +378,6 @@ components:
   schemas:
     EventType:
       type: string
-      enum:
-        - PRISON_COURT_REGISTER_GENERATED
 
     NotificationEndpoint:
       type: object
