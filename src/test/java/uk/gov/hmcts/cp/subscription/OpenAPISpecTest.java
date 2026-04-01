@@ -121,8 +121,6 @@ class OpenAPISpecTest {
         assertThat(EventNotificationPayload.class.getDeclaredField("cases").getType()).isAssignableFrom(List.class);
         assertThat(EventNotificationPayloadCasesInner.class.getDeclaredField("urn").getType()).isEqualTo(String.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("masterDefendantId").getType()).isEqualTo(UUID.class);
-        assertThat(EventNotificationPayload.class.getDeclaredField("defendantName").getType()).isEqualTo(String.class);
-        assertThat(EventNotificationPayload.class.getDeclaredField("defendantDateOfBirth").getType()).isEqualTo(LocalDate.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("documentId").getType()).isEqualTo(UUID.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("documentGeneratedTimestamp").getType()).isEqualTo(Instant.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("prisonEmailAddress").getType()).isEqualTo(String.class);

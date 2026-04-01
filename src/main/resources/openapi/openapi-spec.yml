@@ -590,8 +590,6 @@ components:
       required:
         - cases
         - masterDefendantId
-        - defendantName
-        - defendantDateOfBirth
         - documentId
         - documentGeneratedTimestamp
         - prisonEmailAddress
@@ -614,15 +612,6 @@ components:
           format: uuid
           description: Unique identifier for the master defendant
           example: "550e8400-e29b-41d4-a716-446655440000"
-        defendantName:
-          type: string
-          description: Full name of the defendant
-          example: "John Doe"
-        defendantDateOfBirth:
-          type: string
-          format: date
-          description: Date of birth of the defendant
-          example: "1990-05-15"
         documentId:
           type: string
           format: uuid
