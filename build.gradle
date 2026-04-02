@@ -5,7 +5,7 @@ plugins {
   id 'jacoco'
   id 'maven-publish'
   id "com.github.ben-manes.versions" version "0.53.0"
-  id "org.cyclonedx.bom" version "3.2.2"
+  id "org.cyclonedx.bom" version "3.2.3"
   id 'pmd'
 }
 
@@ -36,11 +36,11 @@ dependencies {
 
 
   // Spring Boot Core
-  compileOnly 'org.springframework.boot:spring-boot-starter-web:4.0.4'
-  testImplementation 'org.springframework.boot:spring-boot-starter-web:4.0.4'
-  compileOnly 'org.springframework.boot:spring-boot-starter-validation:4.0.4'
-  testImplementation 'org.springframework.boot:spring-boot-starter-validation:4.0.4'
-  testImplementation 'org.springframework.boot:spring-boot-starter-test:4.0.4'
+  compileOnly 'org.springframework.boot:spring-boot-starter-web:4.0.5'
+  testImplementation 'org.springframework.boot:spring-boot-starter-web:4.0.5'
+  compileOnly 'org.springframework.boot:spring-boot-starter-validation:4.0.5'
+  testImplementation 'org.springframework.boot:spring-boot-starter-validation:4.0.5'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test:4.0.5'
 
 
   // OpenApi Client
@@ -50,5 +50,5 @@ dependencies {
 
   // See docs/DEPENDENCIES.md that explains why we have JUST ONE implementation / published dependency
   // The rest are not included in published dependencies
-  implementation 'io.swagger.core.v3:swagger-annotations:2.2.45'
+  implementation 'io.swagger.core.v3:swagger-annotations:2.2.46'
 }
