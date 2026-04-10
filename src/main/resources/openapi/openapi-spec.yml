@@ -1,8 +1,8 @@
 openapi: 3.1.0
 
 info:
-  title: Client Subscriptions API
-  description: API for managing client subscriptions as standalone resources.
+  title: API for Crime Hearing Results Document Subscription
+  description: Hearing Results Document Subscription specification
   version: 1.0.0
   license:
     name: MIT
