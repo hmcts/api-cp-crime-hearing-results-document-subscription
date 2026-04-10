@@ -5,7 +5,7 @@ plugins {
   id 'jacoco'
   id 'maven-publish'
   id "com.github.ben-manes.versions" version "0.53.0"
-  id "org.cyclonedx.bom" version "3.2.3"
+  id "org.cyclonedx.bom" version "3.2.4"
   id 'pmd'
 }
 
@@ -50,5 +50,5 @@ dependencies {
 
   // See docs/DEPENDENCIES.md that explains why we have JUST ONE implementation / published dependency
   // The rest are not included in published dependencies
-  implementation 'io.swagger.core.v3:swagger-annotations:2.2.46'
+  implementation 'io.swagger.core.v3:swagger-annotations:2.2.47'
 }
