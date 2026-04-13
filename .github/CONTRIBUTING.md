@@ -38,3 +38,21 @@ Here's what you should do:
 
 At this point the pull request will wait for someone from our team to review. It may be accepted straight away,
 or we may ask you to make some additional amendments before incorporating it into the main branch.
+
+## Developer tooling
+
+### Automated PR creation with Claude Code
+
+If you use [Claude Code](https://claude.com/claude-code), this repo includes a `/create-pr` skill that automates pull request creation with JIRA integration.
+
+**What it does:**
+- Extracts the JIRA ticket from your branch name (e.g. `dev/AMP-346` → `AMP-346`)
+- Drafts a PR title and description based on your commits and diff
+- Creates the GitHub PR
+
+**How to use it:**
+1. Install Claude Code and authenticate with `gh auth login`
+2. Set your JIRA Personal Access Token: `export JIRA_TOKEN=<your-token>` (generate one at https://tools.hmcts.net/jira/secure/ViewProfile.jspa)
+3. From your branch, run `/create-pr` in Claude Code
+
+The skill definition lives in [`.claude/skills/create-pr.md`](../.claude/skills/create-pr.md).

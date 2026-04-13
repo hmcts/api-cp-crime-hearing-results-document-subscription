@@ -16,7 +16,8 @@ servers:
   - url: https://api.example.com
 
 security:
-  - bearerAuth: [ ]
+  - bearerAuth: []
+    subscriptionKey: []
 
 tags:
   - name: Subscription
@@ -42,6 +43,18 @@ paths:
               examples:
                 Event-Types Example:
                   $ref: '#/components/examples/EventTypesResponse'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '401':
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -93,7 +106,13 @@ paths:
               $ref: '#/components/headers/XCorrelationId'
 
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -177,7 +196,16 @@ paths:
               $ref: '#/components/headers/XCorrelationId'
 
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
 
     put:
@@ -231,7 +259,13 @@ paths:
               $ref: '#/components/headers/XCorrelationId'
 
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -266,7 +300,13 @@ paths:
               $ref: '#/components/headers/XCorrelationId'
 
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -307,6 +347,18 @@ paths:
               examples:
                 NotificationAccepted:
                   $ref: '#/components/examples/NotificationAccepted'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '401':
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -355,7 +407,13 @@ paths:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -366,6 +424,11 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    subscriptionKey:
+      type: apiKey
+      in: header
+      name: Ocp-Apim-Subscription-Key
+      description: Subscription key for API access
 
   headers:
     XCorrelationId:
