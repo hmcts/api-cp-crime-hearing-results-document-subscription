@@ -197,9 +197,15 @@ paths:
 
         '401':
           description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
         '403':
           description: Forbidden - valid subscription key required but not subscribed to this API
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
 
     put:
