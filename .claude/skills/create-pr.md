@@ -136,16 +136,14 @@ gh api repos/hmcts/api-cp-crime-hearing-results-document-subscription/pulls/<PR_
 
 List all unresolved review comments grouped by file. Present a summary to the user:
 - *"I found N review comments. Here's a summary: ..."*
-- Ask: *"Do you want me to address all of them, or specific ones?"*
 
-### Amend Step 2 — Address the comments
+The developer is responsible for addressing the comments. Once they have made the fixes, proceed to Amend Step 2.
 
-For each comment to be addressed:
-1. Read the relevant file(s)
-2. Apply the requested change
-3. Note what was changed and why
+### Amend Step 2 — Confirm fixes are ready
 
-If a comment is ambiguous or requires a design decision, ask the user before making the change.
+Ask the user: *"Have you made the fixes? I'll commit and push them now."*
+
+Wait for confirmation before proceeding.
 
 ### Amend Step 3 — Commit the fixes
 
