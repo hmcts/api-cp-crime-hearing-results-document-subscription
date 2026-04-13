@@ -28,4 +28,4 @@ package-lock.json
 
 /*report.html
 
-.claude/settings.local.json
+.claude/settings*.json
