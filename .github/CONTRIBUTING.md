@@ -49,7 +49,6 @@ If you use [Claude Code](https://claude.com/claude-code), this repo includes a `
 - Extracts the JIRA ticket from your branch name (e.g. `dev/AMP-346` → `AMP-346`)
 - Drafts a PR title and description based on your commits and diff
 - Creates the GitHub PR
-- Posts the PR link as a comment on the JIRA ticket
 
 **How to use it:**
 1. Install Claude Code and authenticate with `gh auth login`
