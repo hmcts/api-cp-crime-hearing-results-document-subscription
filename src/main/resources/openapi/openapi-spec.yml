@@ -129,7 +129,7 @@ paths:
                   description: Identifier of the key used to sign this callback. Matches the keyId issued when the subscription was created.
                   schema:
                     type: string
-                    example: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+                    example: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
                 - name: X-Signature
                   in: header
                   required: true
@@ -174,6 +174,9 @@ paths:
       responses:
         '200':
           description: Subscription object
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
           content:
             application/json:
               examples:
@@ -573,7 +576,7 @@ components:
         keyId:
           type: string
           description: Identifier for the shared secret used to sign outbound callbacks for this subscription
-          example: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+          example: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
         secret:
           type: string
           writeOnly: true
@@ -727,7 +730,7 @@ components:
           callbackUrl: "https://client.example.com/events"
         eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
         hmac:
-          keyId: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+          keyId: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
           secret: "example-base64-encoded-secret"
         createdAt: "2025-01-01T10:00:00Z"
         updatedAt: null
