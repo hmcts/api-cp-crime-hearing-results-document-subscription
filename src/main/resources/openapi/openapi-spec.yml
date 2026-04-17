@@ -16,7 +16,8 @@ servers:
   - url: https://api.example.com
 
 security:
-  - bearerAuth: [ ]
+  - bearerAuth: []
+    subscriptionKey: []
 
 tags:
   - name: Subscription
@@ -42,6 +43,18 @@ paths:
               examples:
                 Event-Types Example:
                   $ref: '#/components/examples/EventTypesResponse'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '401':
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -93,7 +106,13 @@ paths:
               $ref: '#/components/headers/XCorrelationId'
 
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -110,7 +129,7 @@ paths:
                   description: Identifier of the key used to sign this callback. Matches the keyId issued when the subscription was created.
                   schema:
                     type: string
-                    example: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+                    example: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
                 - name: X-Signature
                   in: header
                   required: true
@@ -155,6 +174,9 @@ paths:
       responses:
         '200':
           description: Subscription object
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
           content:
             application/json:
               examples:
@@ -177,7 +199,16 @@ paths:
               $ref: '#/components/headers/XCorrelationId'
 
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
 
 
     put:
@@ -231,7 +262,13 @@ paths:
               $ref: '#/components/headers/XCorrelationId'
 
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -266,7 +303,13 @@ paths:
               $ref: '#/components/headers/XCorrelationId'
 
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -307,6 +350,18 @@ paths:
               examples:
                 NotificationAccepted:
                   $ref: '#/components/examples/NotificationAccepted'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '401':
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -355,7 +410,13 @@ paths:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
         '401':
-          description: Unauthorized
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden - valid subscription key required but not subscribed to this API
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -366,6 +427,11 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+    subscriptionKey:
+      type: apiKey
+      in: header
+      name: Ocp-Apim-Subscription-Key
+      description: Subscription key for API access
 
   headers:
     XCorrelationId:
@@ -510,7 +576,7 @@ components:
         keyId:
           type: string
           description: Identifier for the shared secret used to sign outbound callbacks for this subscription
-          example: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+          example: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
         secret:
           type: string
           writeOnly: true
@@ -664,7 +730,7 @@ components:
           callbackUrl: "https://client.example.com/events"
         eventTypes: [ "PRISON_COURT_REGISTER_GENERATED" ]
         hmac:
-          keyId: "keyId_b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+          keyId: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
           secret: "example-base64-encoded-secret"
         createdAt: "2025-01-01T10:00:00Z"
         updatedAt: null
