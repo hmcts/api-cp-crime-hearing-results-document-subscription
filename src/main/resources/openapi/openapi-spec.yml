@@ -295,18 +295,7 @@ paths:
 
       responses:
         '202':
-          description:
-            Notification accepted. The response body contains the EventNotificationPayload
-            that has been dispatched to each matching subscriber's callback URL.
-            Subscribers receive this payload as the POST body at their registered callbackUrl,
-            accompanied by X-Key-Id and X-Signature headers for HMAC verification.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventNotificationPayload'
-              examples:
-                NotificationAccepted:
-                  $ref: '#/components/examples/NotificationAccepted'
+          description: accepted
           headers:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
@@ -741,18 +730,3 @@ components:
           cases:
             - urn: 'CT98KRYCAP'
 
-    NotificationAccepted:
-      summary: Payload dispatched to each subscriber's callback URL
-      description:
-        This is the JSON body that the subscription service POSTs to each subscriber's
-        registered callbackUrl. Subscribers should use documentId to retrieve the PDF via
-        GET /client-subscriptions/{clientSubscriptionId}/documents/{documentId}.
-        The X-Key-Id and X-Signature headers accompany this body for HMAC verification.
-      value:
-        cases:
-          - urn: 'CT98KRYCAP'
-          - urn: 'AB75123123'
-        masterDefendantId: '8b8f1c3a-9a41-4f0f-b8a0-1c23d9e8a111'
-        documentId: '123e4567-e89b-12d3-a456-426614174000'
-        documentGeneratedTimestamp: '2024-01-15T10:30:00Z'
-        prisonEmailAddress: 'prison@moj.gov.uk'
