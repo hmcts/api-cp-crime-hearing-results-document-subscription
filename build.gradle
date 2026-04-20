@@ -4,7 +4,7 @@ plugins {
   id 'com.diffplug.spotless' version '8.4.0'
   id 'jacoco'
   id 'maven-publish'
-  id "com.github.ben-manes.versions" version "0.53.0"
+  id "com.github.ben-manes.versions" version "0.54.0"
   id "org.cyclonedx.bom" version "3.2.4"
   id 'pmd'
 }
@@ -45,10 +45,10 @@ dependencies {
 
   // OpenApi Client
   compileOnly 'org.openapitools:openapi-generator-core:7.21.0'
-  compileOnly 'io.swagger.parser.v3:swagger-parser:2.1.39'
+  compileOnly 'io.swagger.parser.v3:swagger-parser:2.1.40'
 
 
   // See docs/DEPENDENCIES.md that explains why we have JUST ONE implementation / published dependency
   // The rest are not included in published dependencies
-  implementation 'io.swagger.core.v3:swagger-annotations:2.2.47'
+  implementation 'io.swagger.core.v3:swagger-annotations:2.2.48'
 }
