@@ -118,6 +118,7 @@ class OpenAPISpecTest {
 
     @Test
     void event_notification_payload_should_have_all_expected_fields() throws NoSuchFieldException {
+        assertThat(EventNotificationPayload.class.getDeclaredField("eventType").getType()).isEqualTo(String.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("cases").getType()).isAssignableFrom(List.class);
         assertThat(EventNotificationPayloadCasesInner.class.getDeclaredField("urn").getType()).isEqualTo(String.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("masterDefendantId").getType()).isEqualTo(UUID.class);
