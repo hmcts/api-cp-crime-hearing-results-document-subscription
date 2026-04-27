@@ -654,12 +654,17 @@ components:
       type: object
       description: Payload sent to the callback URL when an event occurs
       required:
+        - eventType
         - cases
         - masterDefendantId
         - documentId
         - documentGeneratedTimestamp
         - prisonEmailAddress
       properties:
+        eventType:
+          description: Type of the event that triggered this notification
+          example: "PRISON_COURT_REGISTER_GENERATED"
+          $ref: '#/components/schemas/EventType'
         cases:
           type: array
           minItems: 1
