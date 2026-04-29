@@ -16,8 +16,9 @@
 ## 3. Test Updates
 
 - [x] 3.1 Update `OpenAPISpecTest` to assert that the generated `RotateSecretRequest` model has a field named `keyId` of type `String`
-- [x] 3.2 Update `OpenAPISpecTest` to assert that `SubscriptionApi` (or equivalent generated interface) has a method for `rotateClientSubscriptionSecret`
-- [x] 3.3 Run `./gradlew test` to confirm all tests pass
+- [x] 3.2 Update `OpenAPISpecTest` to assert that `SubscriptionApi` has a method for `rotateClientSubscriptionSecret`
+- [x] 3.3 Update `OpenAPISpecTest` to assert that `rotateClientSubscriptionSecret` return type is `ResponseEntity<HmacCredentials>`
+- [x] 3.4 Run `./gradlew test` to confirm all tests pass
 
 ## 4. Build and Lint Verification
 

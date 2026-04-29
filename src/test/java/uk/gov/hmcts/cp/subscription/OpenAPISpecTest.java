@@ -18,6 +18,7 @@ import uk.gov.hmcts.cp.openapi.model.RotateSecretRequest;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -102,20 +103,21 @@ class OpenAPISpecTest {
     void subscription_api_should_have_expected_methods() {
         assertThat(SubscriptionApi.class.getMethods())
                 .extracting(Method::getName)
-                .containsAll(List.of("createClientSubscription", "getClientSubscription", "updateClientSubscription", "deleteClientSubscription"));
-    }
-
-    @Test
-    void subscription_api_should_have_rotate_secret_method() {
-        assertThat(SubscriptionApi.class.getMethods())
-                .extracting(Method::getName)
-                .contains("rotateClientSubscriptionSecret");
+                .containsAll(List.of("createClientSubscription", "getClientSubscription", "updateClientSubscription", "deleteClientSubscription", "rotateClientSubscriptionSecret"));
     }
 
     @Test
     void rotate_secret_request_should_have_key_id_field() throws NoSuchFieldException {
         Field keyIdField = RotateSecretRequest.class.getDeclaredField("keyId");
         assertThat(keyIdField.getType()).isEqualTo(String.class);
+    }
+
+    @Test
+    void rotate_secret_method_should_return_hmac_credentials() throws NoSuchMethodException {
+        Method method = SubscriptionApi.class.getMethod(
+                "rotateClientSubscriptionSecret", UUID.class, RotateSecretRequest.class, UUID.class);
+        ParameterizedType returnType = (ParameterizedType) method.getGenericReturnType();
+        assertThat(returnType.getActualTypeArguments()[0]).isEqualTo(HmacCredentials.class);
     }
 
     @Test
