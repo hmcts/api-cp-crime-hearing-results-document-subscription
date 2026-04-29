@@ -3,6 +3,7 @@ package uk.gov.hmcts.cp.subscription;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import uk.gov.hmcts.cp.openapi.api.InternalApi;
 import uk.gov.hmcts.cp.openapi.api.SubscriptionApi;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscription;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
@@ -14,6 +15,7 @@ import uk.gov.hmcts.cp.openapi.model.HmacCredentials;
 import uk.gov.hmcts.cp.openapi.model.NotificationEndpoint;
 import uk.gov.hmcts.cp.openapi.model.EventPayload;
 import uk.gov.hmcts.cp.openapi.model.EventPayloadDefendant;
+import uk.gov.hmcts.cp.openapi.model.RotateSecretRequest;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -102,6 +104,19 @@ class OpenAPISpecTest {
         assertThat(SubscriptionApi.class.getMethods())
                 .extracting(Method::getName)
                 .containsAll(List.of("createClientSubscription", "getClientSubscription", "updateClientSubscription", "deleteClientSubscription"));
+    }
+
+    @Test
+    void internal_api_should_have_rotate_secret_method() {
+        assertThat(InternalApi.class.getMethods())
+                .extracting(Method::getName)
+                .contains("rotateClientSubscriptionSecret");
+    }
+
+    @Test
+    void rotate_secret_request_should_have_key_id_field() throws NoSuchFieldException {
+        Field keyIdField = RotateSecretRequest.class.getDeclaredField("keyId");
+        assertThat(keyIdField.getType()).isEqualTo(String.class);
     }
 
     @Test

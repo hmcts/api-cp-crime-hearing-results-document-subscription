@@ -355,6 +355,77 @@ paths:
             X-Correlation-Id:
               $ref: '#/components/headers/XCorrelationId'
 
+  /client-subscriptions/{clientSubscriptionId}/secret/rotate:
+    post:
+      summary: Rotate the HMAC signing secret for a subscription
+      description: Issues a new HMAC secret for the specified subscription. The new secret is returned once and cannot be retrieved again.
+      operationId: rotateClientSubscriptionSecret
+      tags:
+        - Internal
+      parameters:
+        - name: clientSubscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: "aa12f3dd-4cc1-4da7-b9ea-552fa3b9bc44"
+        - $ref: '#/components/parameters/XCorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RotateSecretRequest'
+            examples:
+              rotateSecret:
+                $ref: '#/components/examples/rotateSecretRequest'
+      responses:
+        '200':
+          description: Secret rotated successfully. The new secret is returned once and cannot be retrieved again.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HmacCredentials'
+              examples:
+                rotateSecretResponse:
+                  $ref: '#/components/examples/rotateSecretResponse'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '400':
+          description: Invalid request — missing or malformed keyId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '401':
+          description: Unauthorized - missing or invalid authentication credentials
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '403':
+          description: Forbidden — the subscription does not belong to the calling client
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
+        '404':
+          description: Not found — the keyId does not match any known key for this subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          headers:
+            X-Correlation-Id:
+              $ref: '#/components/headers/XCorrelationId'
+
   /client-subscriptions/{clientSubscriptionId}/documents/{documentId}:
     get:
       summary: Retrieve PDF for the specified document id
@@ -573,6 +644,16 @@ components:
             Base64-encoded shared secret used to sign outbound callbacks for this subscription.
             Returned in the create subscription response. Not returned by subsequent GET operations.
           example: "example-base64-encoded-secret"
+
+    RotateSecretRequest:
+      type: object
+      required:
+        - keyId
+      properties:
+        keyId:
+          type: string
+          description: Identifier of the current key to rotate
+          example: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
 
     ErrorResponse:
       type: object
@@ -810,4 +891,15 @@ components:
             emailAddress: 'prison@moj.gov.uk'
           cases:
             - urn: 'CT98KRYCAP'
+
+    rotateSecretRequest:
+      summary: Example secret rotation request
+      value:
+        keyId: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+
+    rotateSecretResponse:
+      summary: Example secret rotation response
+      value:
+        keyId: "kid-v1-b41a48b7-a2a1-45f1-b562-1358f141ddb2"
+        secret: "new-example-base64-encoded-secret"
 
