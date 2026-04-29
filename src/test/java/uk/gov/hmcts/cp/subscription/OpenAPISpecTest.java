@@ -107,6 +107,7 @@ class OpenAPISpecTest {
     @Test
     void pcr_event_payload_should_have_all_expected_fields() throws NoSuchFieldException {
         assertThat(EventPayload.class.getDeclaredField("eventId").getType()).isEqualTo(UUID.class);
+        assertThat(EventPayload.class.getDeclaredField("hearingId").getType()).isEqualTo(UUID.class);
         assertThat(EventPayload.class.getDeclaredField("eventType").getType()).isEqualTo(String.class);
         assertThat(EventPayload.class.getDeclaredField("timestamp").getType()).isEqualTo(Instant.class);
 
@@ -125,5 +126,6 @@ class OpenAPISpecTest {
         assertThat(EventNotificationPayload.class.getDeclaredField("documentId").getType()).isEqualTo(UUID.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("documentGeneratedTimestamp").getType()).isEqualTo(Instant.class);
         assertThat(EventNotificationPayload.class.getDeclaredField("prisonEmailAddress").getType()).isEqualTo(String.class);
+        assertThat(EventNotificationPayload.class.getDeclaredField("hearingId").getType()).isEqualTo(UUID.class);
     }
 }

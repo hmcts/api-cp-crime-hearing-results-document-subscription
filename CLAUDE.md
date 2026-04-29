@@ -27,6 +27,8 @@ This is a **specification-first API** project for the Crime Hearing Results Docu
 ### Code Quality
 ```bash
 ./gradlew pmdMain                                    # PMD static analysis
+./gradlew spotlessCheck                              # code formatting check
+./gradlew spotlessApply                              # auto-fix formatting
 spectral lint "src/main/resources/openapi/*.{yml,yaml}"  # OpenAPI spec linting
 ```
 
@@ -78,6 +80,7 @@ Test method names use underscores (e.g. `notification_endpoint_should_have_expec
 - `gradle/pmd.gradle` — PMD rules (see `.github/pmd-ruleset.xml`); generated code is excluded
 - `gradle/jar.gradle` — JAR packaging; includes `CHANGELOG.md` in `META-INF` and CycloneDX SBOM (`bom.json`)
 - `gradle/repositories.gradle` — GitHub Packages + Azure Artifacts; publishes to both
+- `gradle/dependency.gradle` — `dependencyUpdates` task configured to reject non-stable candidate versions
 
 ### CI/CD
 - **`ci-draft.yml`** — runs on PRs/main; publishes draft spec to SwaggerHub and draft artifact
