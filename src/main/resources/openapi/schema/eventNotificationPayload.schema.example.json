@@ -1,9 +1,11 @@
 {
-  "cases": [
-    {"urn": "CT981234123"}
-  ],
+  "eventType": "PRISON_COURT_REGISTER_GENERATED",
+  "hearingId": "7f3b1c2d-4e5a-6789-abcd-ef0123456789",
   "masterDefendantId": "550e8400-e29b-41d4-a716-446655440000",
   "documentId": "123e4567-e89b-12d3-a456-426614174000",
   "documentGeneratedTimestamp": "2024-01-15T10:30:00Z",
+  "cases": [
+    {"urn": "CT981234123"}
+  ],
   "prisonEmailAddress": "prison@example.com"
 }

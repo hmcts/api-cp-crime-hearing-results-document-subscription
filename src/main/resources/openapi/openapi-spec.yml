@@ -596,18 +596,23 @@ components:
         - timestamp
         - defendant
       properties:
-        eventId:
-          type: string
-          format: uuid
-          description: Unique identifier of the stored PCR document event
-        materialId:
-          type: string
-          format: uuid
-          description: Unique identifier of the stored PCR document
         eventType:
           type: string
           description: Type of the event, e.g., PRISON_COURT_REGISTER_GENERATED
           $ref: '#/components/schemas/EventType'
+        eventId:
+          type: string
+          format: uuid
+          description: Unique identifier of the stored PCR document event
+        hearingId:
+          type: string
+          format: uuid
+          description: Unique identifier of the hearing associated with this event
+          example: "7f3b0726-ab6e-8579-2bb4-dd0870bcbf5a"
+        materialId:
+          type: string
+          format: uuid
+          description: Unique identifier of the stored PCR document
         timestamp:
           type: string
           format: date-time
@@ -665,19 +670,11 @@ components:
           description: Type of the event that triggered this notification
           example: "PRISON_COURT_REGISTER_GENERATED"
           $ref: '#/components/schemas/EventType'
-        cases:
-          type: array
-          minItems: 1
-          description: List of cases associated with the defendant
-          items:
-            type: object
-            required:
-              - urn
-            properties:
-              urn:
-                type: string
-                description: Case URN associated with the defendant
-                example: "CT981234123"
+        hearingId:
+          type: string
+          format: uuid
+          description: Unique identifier of the hearing that produced the result document
+          example: "7f3b1c2d-4e5a-6789-abcd-ef0123456789"
         masterDefendantId:
           type: string
           format: uuid
@@ -693,6 +690,19 @@ components:
           format: date-time
           description: Document generation timestamp
           example: "2024-01-15T10:30:00Z"
+        cases:
+          type: array
+          minItems: 1
+          description: List of cases associated with the defendant
+          items:
+            type: object
+            required:
+              - urn
+            properties:
+              urn:
+                type: string
+                description: Case URN associated with the defendant
+                example: "CT981234123"
         prisonEmailAddress:
           type: string
           format: email
