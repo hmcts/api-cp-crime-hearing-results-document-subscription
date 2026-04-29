@@ -3,7 +3,6 @@ package uk.gov.hmcts.cp.subscription;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import uk.gov.hmcts.cp.openapi.api.InternalApi;
 import uk.gov.hmcts.cp.openapi.api.SubscriptionApi;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscription;
 import uk.gov.hmcts.cp.openapi.model.ClientSubscriptionRequest;
@@ -107,8 +106,8 @@ class OpenAPISpecTest {
     }
 
     @Test
-    void internal_api_should_have_rotate_secret_method() {
-        assertThat(InternalApi.class.getMethods())
+    void subscription_api_should_have_rotate_secret_method() {
+        assertThat(SubscriptionApi.class.getMethods())
                 .extracting(Method::getName)
                 .contains("rotateClientSubscriptionSecret");
     }

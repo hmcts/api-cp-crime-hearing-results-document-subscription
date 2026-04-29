@@ -4,7 +4,7 @@ Subscribers currently have no way to rotate their HMAC signing secret. A dedicat
 
 ## What Changes
 
-- Add `POST /client-subscriptions/{clientSubscriptionId}/secret/rotate` endpoint (tagged "Internal" consistent with notification endpoint)
+- Add `POST /client-subscriptions/{clientSubscriptionId}/secret/rotate` endpoint (tagged `Subscription`)
 - Request body: `RotateSecretRequest` containing `keyId` (the current key identifier to rotate)
 - Response body: `HmacCredentials` with the same `keyId` (unchanged) and a newly generated `secret`
 - Response `200`: rotation successful, new secret returned in body

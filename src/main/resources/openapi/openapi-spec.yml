@@ -361,7 +361,7 @@ paths:
       description: Issues a new HMAC secret for the specified subscription. The new secret is returned once and cannot be retrieved again.
       operationId: rotateClientSubscriptionSecret
       tags:
-        - Internal
+        - Subscription
       parameters:
         - name: clientSubscriptionId
           in: path
