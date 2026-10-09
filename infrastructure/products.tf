@@ -1,8 +1,9 @@
 locals {
-  # The API spec's description, unless apim_product.description overrides it.
+  # The first paragraph of the API spec's description, on one line, unless
+  # apim_product.description overrides it.
   product_description = try(coalesce(
     var.apim_product.description,
-    trimspace(local.api_specs[sort(keys(var.apis))[0]].info.description)
+    replace(trimspace(split("\n\n", trimspace(local.api_specs[sort(keys(var.apis))[0]].info.description))[0]), "\n", " ")
   ), null)
 }
 
