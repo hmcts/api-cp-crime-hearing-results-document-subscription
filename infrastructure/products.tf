@@ -1,7 +1,5 @@
 locals {
-  # Shown on the product's page in the developer portal. Taken from the product's API spec,
-  # so the spec stays the one place to edit it; set apim_product.description to override.
-  # Trimmed: a YAML block scalar ends in a newline, which APIM would keep.
+  # The API spec's description, unless apim_product.description overrides it.
   product_description = try(coalesce(
     var.apim_product.description,
     trimspace(local.api_specs[sort(keys(var.apis))[0]].info.description)
