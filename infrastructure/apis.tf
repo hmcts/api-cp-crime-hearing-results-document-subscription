@@ -39,6 +39,8 @@ module "apis" {
     lower(replace(each.key, "/[^0-9A-Za-z-]/", "-"))
   )
 
+  api_description = try(local.api_specs[each.key].info.description, null)
+
   protocols             = each.value.protocols
   service_url           = "https://${each.value.service_host}.org.uk${each.value.service_path}"
   subscription_required = each.value.subscription_required
