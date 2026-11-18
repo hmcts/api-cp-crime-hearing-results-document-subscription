@@ -40,6 +40,26 @@ class ApiPolicyTest {
         assertThat(childrenOf("inbound").getFirst().getTagName()).isEqualTo("base");
     }
 
+    @Test
+    void rate_limiting_should_run_before_authentication_so_rejected_calls_are_counted() {
+        assertThat(positionOf("rate-limit-by-key")).isLessThan(positionOf("choose"));
+    }
+
+    @Test
+    void daily_quota_should_run_after_authentication_so_only_real_usage_is_metered() {
+        assertThat(positionOf("quota-by-key")).isGreaterThan(positionOf("choose"));
+    }
+
+    private int positionOf(final String tagName) {
+        final List<Element> inbound = childrenOf("inbound");
+        for (int i = 0; i < inbound.size(); i++) {
+            if (inbound.get(i).getTagName().equals(tagName)) {
+                return i;
+            }
+        }
+        throw new AssertionError("inbound has no <" + tagName + ">");
+    }
+
     private Element sectionNamed(final String name) {
         return (Element) policy.getElementsByTagName(name).item(0);
     }
