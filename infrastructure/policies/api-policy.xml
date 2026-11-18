@@ -1,5 +1,6 @@
 <policies>
     <inbound>
+        <base />
         <choose>
             <when condition="@(context.Request.Headers.ContainsKey(&quot;Authorization&quot;))">
                 <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Your JWT token failed CNP validation! ">
@@ -32,7 +33,6 @@
         </choose>
         <rate-limit-by-key calls="30" renewal-period="60" counter-key="@((context.Subscription?.Key ?? context.Request.IpAddress) + &quot;:hrds&quot;)" />
         <quota-by-key calls="500" renewal-period="86400" counter-key="@((context.Subscription?.Key ?? context.Request.IpAddress) + &quot;:hrds&quot;)" />
-        <base />
     </inbound>
     <backend>
         <limit-concurrency key="@((context.Subscription?.Key ?? context.Request.IpAddress) + &quot;:hrds&quot;)" max-count="10">

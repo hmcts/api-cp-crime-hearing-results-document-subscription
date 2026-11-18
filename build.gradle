@@ -52,3 +52,10 @@ dependencies {
   // The rest are not included in published dependencies
   implementation 'io.swagger.core.v3:swagger-annotations:2.2.47'
 }
+
+// ApiPolicyTest reads the APIM policy, which Gradle would not otherwise see as an input.
+tasks.named('test') {
+  inputs.file("infrastructure/policies/api-policy.xml")
+      .withPropertyName('apimPolicy')
+      .withPathSensitivity(PathSensitivity.RELATIVE)
+}
