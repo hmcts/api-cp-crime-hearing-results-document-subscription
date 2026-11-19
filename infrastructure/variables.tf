@@ -58,6 +58,7 @@ variable "apim_product" {
   description = "Product configuration to create in APIM."
   type = object({
     name                          = string
+    description                   = optional(string)
     subscription_required         = optional(bool, true)
     subscriptions_limit           = optional(number, 20)
     approval_required             = optional(bool, true)

@@ -1,9 +1,19 @@
+locals {
+  # The first paragraph of the API spec's description, on one line, unless
+  # apim_product.description overrides it.
+  product_description = try(coalesce(
+    var.apim_product.description,
+    replace(trimspace(split("\n\n", trimspace(local.api_specs[sort(keys(var.apis))[0]].info.description))[0]), "\n", " ")
+  ), null)
+}
+
 module "product" {
   source = "git::https://github.com/hmcts/cnp-module-api-mgmt-product.git?ref=master"
 
   api_mgmt_rg                   = var.api_mgmt_rg
   api_mgmt_name                 = var.api_mgmt_name
   name                          = var.apim_product.name
+  description                   = local.product_description
   subscription_required         = var.apim_product.subscription_required
   subscriptions_limit           = var.apim_product.subscriptions_limit
   approval_required             = var.apim_product.approval_required
